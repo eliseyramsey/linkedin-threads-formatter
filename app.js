@@ -18,13 +18,16 @@ const threadsPreview = document.getElementById('threadsPreview');
 const linkedinText = document.getElementById('linkedinText');
 const threadsChain = document.getElementById('threadsChain');
 const copyLinkedinBtn = document.getElementById('copyLinkedin');
-const draftsBtn = document.getElementById('draftsBtn');
-const draftsSidebar = document.getElementById('draftsSidebar');
-const sidebarOverlay = document.getElementById('sidebarOverlay');
-const closeSidebarBtn = document.getElementById('closeSidebar');
-const draftsList = document.getElementById('draftsList');
-const saveDraftBtn = document.getElementById('saveDraftBtn');
-const newDraftBtn = document.getElementById('newDraftBtn');
+// ============================================
+// DRAFTS FUNCTIONALITY - COMMENTED OUT
+// ============================================
+// const draftsBtn = document.getElementById('draftsBtn');
+// const draftsSidebar = document.getElementById('draftsSidebar');
+// const sidebarOverlay = document.getElementById('sidebarOverlay');
+// const closeSidebarBtn = document.getElementById('closeSidebar');
+// const draftsList = document.getElementById('draftsList');
+// const saveDraftBtn = document.getElementById('saveDraftBtn');
+// const newDraftBtn = document.getElementById('newDraftBtn');
 const linkedinAuthor = document.getElementById('linkedinAuthor');
 const linkedinMeta = document.getElementById('linkedinMeta');
 
@@ -334,37 +337,37 @@ function switchTab(platform) {
 }
 
 // ============================================
-// Sidebar Functions
+// Sidebar Functions - COMMENTED OUT
 // ============================================
 
-function openSidebar() {
-    draftsSidebar.classList.remove('hidden');
-    sidebarOverlay.classList.remove('hidden');
-    // Trigger reflow for animation
-    void draftsSidebar.offsetWidth;
-    draftsSidebar.classList.add('visible');
-    sidebarOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-}
+// function openSidebar() {
+//     draftsSidebar.classList.remove('hidden');
+//     sidebarOverlay.classList.remove('hidden');
+//     // Trigger reflow for animation
+//     void draftsSidebar.offsetWidth;
+//     draftsSidebar.classList.add('visible');
+//     sidebarOverlay.classList.add('visible');
+//     document.body.style.overflow = 'hidden';
+// }
 
-function closeSidebar() {
-    draftsSidebar.classList.remove('visible');
-    sidebarOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-        draftsSidebar.classList.add('hidden');
-        sidebarOverlay.classList.add('hidden');
-    }, 250);
-}
+// function closeSidebar() {
+//     draftsSidebar.classList.remove('visible');
+//     sidebarOverlay.classList.remove('visible');
+//     document.body.style.overflow = '';
+//     setTimeout(() => {
+//         draftsSidebar.classList.add('hidden');
+//         sidebarOverlay.classList.add('hidden');
+//     }, 250);
+// }
 
-function createNewDraft() {
-    editor.value = '';
-    updateCharCount();
-    updatePreview();
-    autoResize();
-    closeSidebar();
-    editor.focus();
-}
+// function createNewDraft() {
+//     editor.value = '';
+//     updateCharCount();
+//     updatePreview();
+//     autoResize();
+//     closeSidebar();
+//     editor.focus();
+// }
 
 // ============================================
 // Profile Functions
@@ -408,18 +411,20 @@ copyLinkedinBtn.addEventListener('click', () => {
     copyToClipboard(editor.value, copyLinkedinBtn);
 });
 
-// Sidebar events
-draftsBtn.addEventListener('click', openSidebar);
-closeSidebarBtn.addEventListener('click', closeSidebar);
-sidebarOverlay.addEventListener('click', closeSidebar);
-newDraftBtn.addEventListener('click', createNewDraft);
+// ============================================
+// Sidebar events - COMMENTED OUT
+// ============================================
+// draftsBtn.addEventListener('click', openSidebar);
+// closeSidebarBtn.addEventListener('click', closeSidebar);
+// sidebarOverlay.addEventListener('click', closeSidebar);
+// newDraftBtn.addEventListener('click', createNewDraft);
 
-// Escape key closes sidebar
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !draftsSidebar.classList.contains('hidden')) {
-        closeSidebar();
-    }
-});
+// // Escape key closes sidebar
+// document.addEventListener('keydown', (e) => {
+//     if (e.key === 'Escape' && !draftsSidebar.classList.contains('hidden')) {
+//         closeSidebar();
+//     }
+// });
 
 // ============================================
 // Initialization

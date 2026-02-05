@@ -57,7 +57,8 @@ header {
     color: var(--accent-linkedin);
 }
 
-.drafts-btn {
+/* DRAFTS BUTTON - COMMENTED OUT */
+/* .drafts-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -76,7 +77,7 @@ header {
 .drafts-btn:hover {
     background: var(--bg-color);
     border-color: var(--text-secondary);
-}
+} */
 
 /* Main Content */
 main {
@@ -435,8 +436,8 @@ textarea::placeholder {
     border-color: #16a34a;
 }
 
-/* Sidebar */
-.sidebar-overlay {
+/* SIDEBAR & DRAFTS - COMMENTED OUT */
+/* .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -533,7 +534,6 @@ textarea::placeholder {
     background: #094c91;
 }
 
-/* Drafts List */
 .drafts-list {
     display: flex;
     flex-direction: column;
@@ -626,7 +626,7 @@ textarea::placeholder {
 
 .save-draft-btn:hover {
     background: #333;
-}
+} */
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -658,11 +658,12 @@ textarea::placeholder {
         font-size: 14px;
     }
 
-    .drafts-btn span {
+    /* DRAFTS BUTTON RESPONSIVE - COMMENTED OUT */
+    /* .drafts-btn span {
         display: none;
     }
 
     .drafts-btn {
         padding: 10px 12px;
-    }
+    } */
 }
