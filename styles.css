@@ -14,6 +14,8 @@
     --shadow-medium: 0 4px 12px rgba(0,0,0,0.08);
     --transition-fast: 0.15s ease;
     --transition-normal: 0.25s ease;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
 }
 
 /* Reset & Base */
@@ -37,7 +39,7 @@ body {
 /* Header */
 header {
     width: 100%;
-    max-width: 800px;
+    max-width: 1400px;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -78,14 +80,31 @@ header {
     border-color: var(--text-secondary);
 }
 
-/* Main Content */
+/* Main Content - Side by Side Layout */
 main {
     width: 100%;
-    max-width: 720px;
+    max-width: 1400px;
     padding: 0 20px 40px;
     display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* Editor Section (Left) */
+.editor-section {
+    flex: 1;
+    min-width: 0;
+    max-width: 600px;
+}
+
+/* Preview Section (Right) */
+.preview-section {
+    flex: 1;
+    min-width: 0;
+    display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
 }
 
 /* Editor Card */
@@ -96,9 +115,19 @@ main {
     box-shadow: var(--shadow-soft);
 }
 
+/* Toolbar at the top of editor */
+.editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F0F2F5;
+}
+
 textarea {
     width: 100%;
-    min-height: 200px;
+    min-height: 400px;
     border: none;
     resize: none;
     font-family: 'Inter', sans-serif;
@@ -111,15 +140,6 @@ textarea {
 textarea::placeholder {
     color: var(--text-secondary);
     opacity: 0.7;
-}
-
-.editor-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #F0F2F5;
 }
 
 .format-buttons {
@@ -150,15 +170,32 @@ textarea::placeholder {
 .char-counter {
     font-size: 13px;
     color: var(--text-secondary);
+    font-weight: 500;
+    transition: color var(--transition-fast);
 }
 
-/* Tab Switcher */
+.char-counter.warning {
+    color: var(--color-warning);
+}
+
+.char-counter.error {
+    color: var(--color-error);
+    font-weight: 600;
+}
+
+#charLimit {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* Tab Switcher - Inside Preview Section */
 .tabs-container {
     background: #E1E3E1;
     padding: 4px;
     border-radius: 50px;
     display: flex;
-    align-self: center;
+    align-self: flex-start;
+    margin-bottom: 8px;
 }
 
 .tab-btn {
@@ -252,6 +289,8 @@ textarea::placeholder {
     line-height: 1.5;
     white-space: pre-wrap;
     word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
     color: var(--text-primary);
 }
 
@@ -383,6 +422,8 @@ textarea::placeholder {
     font-size: 15px;
     white-space: pre-wrap;
     word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
     line-height: 1.5;
     color: var(--text-primary);
     margin-bottom: 12px;
@@ -628,10 +669,36 @@ textarea::placeholder {
     background: #333;
 }
 
-/* Responsive */
+/* Responsive - Tablet & Mobile */
+@media (max-width: 1024px) {
+    /* Return to vertical layout on tablets and mobile */
+    main {
+        flex-direction: column;
+        gap: 24px;
+        max-width: 720px;
+    }
+
+    .editor-section {
+        max-width: 100%;
+    }
+
+    .preview-section {
+        max-width: 100%;
+    }
+
+    .tabs-container {
+        align-self: center;
+    }
+
+    textarea {
+        min-height: 250px;
+    }
+}
+
 @media (max-width: 600px) {
     header {
         padding: 16px;
+        max-width: 100%;
     }
 
     main {
@@ -644,7 +711,7 @@ textarea::placeholder {
     }
 
     textarea {
-        min-height: 150px;
+        min-height: 200px;
         font-size: 15px;
     }
 
@@ -664,5 +731,15 @@ textarea::placeholder {
 
     .drafts-btn {
         padding: 10px 12px;
+    }
+
+    .editor-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .char-counter {
+        align-self: flex-end;
     }
 }

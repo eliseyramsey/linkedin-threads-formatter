@@ -8,6 +8,8 @@
 // ============================================
 const editor = document.getElementById('editor');
 const charCount = document.getElementById('charCount');
+const charLimit = document.getElementById('charLimit');
+const charCounter = document.querySelector('.char-counter');
 const boldBtn = document.getElementById('boldBtn');
 const italicBtn = document.getElementById('italicBtn');
 const listBtn = document.getElementById('listBtn');
@@ -18,13 +20,16 @@ const threadsPreview = document.getElementById('threadsPreview');
 const linkedinText = document.getElementById('linkedinText');
 const threadsChain = document.getElementById('threadsChain');
 const copyLinkedinBtn = document.getElementById('copyLinkedin');
-const draftsBtn = document.getElementById('draftsBtn');
-const draftsSidebar = document.getElementById('draftsSidebar');
-const sidebarOverlay = document.getElementById('sidebarOverlay');
-const closeSidebarBtn = document.getElementById('closeSidebar');
-const draftsList = document.getElementById('draftsList');
-const saveDraftBtn = document.getElementById('saveDraftBtn');
-const newDraftBtn = document.getElementById('newDraftBtn');
+// ============================================
+// DRAFTS FUNCTIONALITY - COMMENTED OUT
+// ============================================
+// const draftsBtn = document.getElementById('draftsBtn');
+// const draftsSidebar = document.getElementById('draftsSidebar');
+// const sidebarOverlay = document.getElementById('sidebarOverlay');
+// const closeSidebarBtn = document.getElementById('closeSidebar');
+// const draftsList = document.getElementById('draftsList');
+// const saveDraftBtn = document.getElementById('saveDraftBtn');
+// const newDraftBtn = document.getElementById('newDraftBtn');
 const linkedinAuthor = document.getElementById('linkedinAuthor');
 const linkedinMeta = document.getElementById('linkedinMeta');
 
@@ -32,6 +37,7 @@ const linkedinMeta = document.getElementById('linkedinMeta');
 // Constants
 // ============================================
 const THREAD_LIMIT = 500;
+const LINKEDIN_LIMIT = 3000;
 
 // Random profiles for LinkedIn and Threads preview
 const PROFILES = [
@@ -297,11 +303,37 @@ async function copyToClipboard(text, button) {
 }
 
 // ============================================
-// Character Counter
+// Character Counter with LinkedIn Limit Validation
 // ============================================
 
 function updateCharCount() {
-    charCount.textContent = editor.value.length;
+    const currentLength = editor.value.length;
+    charCount.textContent = currentLength;
+
+    // Check if LinkedIn tab is active
+    const isLinkedInActive = linkedinTab.classList.contains('active');
+
+    if (isLinkedInActive) {
+        // Show limit for LinkedIn
+        charLimit.style.display = 'inline';
+
+        // Calculate percentage
+        const percentage = (currentLength / LINKEDIN_LIMIT) * 100;
+
+        // Remove all state classes
+        charCounter.classList.remove('warning', 'error');
+
+        // Apply appropriate class based on percentage
+        if (percentage >= 100) {
+            charCounter.classList.add('error');
+        } else if (percentage >= 90) {
+            charCounter.classList.add('warning');
+        }
+    } else {
+        // Hide limit for Threads (auto-split handled separately)
+        charLimit.style.display = 'none';
+        charCounter.classList.remove('warning', 'error');
+    }
 }
 
 // ============================================
@@ -331,40 +363,42 @@ function switchTab(platform) {
         threadsPreview.classList.remove('hidden');
         linkedinPreview.classList.add('hidden');
     }
-}
-
-// ============================================
-// Sidebar Functions
-// ============================================
-
-function openSidebar() {
-    draftsSidebar.classList.remove('hidden');
-    sidebarOverlay.classList.remove('hidden');
-    // Trigger reflow for animation
-    void draftsSidebar.offsetWidth;
-    draftsSidebar.classList.add('visible');
-    sidebarOverlay.classList.add('visible');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    draftsSidebar.classList.remove('visible');
-    sidebarOverlay.classList.remove('visible');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-        draftsSidebar.classList.add('hidden');
-        sidebarOverlay.classList.add('hidden');
-    }, 250);
-}
-
-function createNewDraft() {
-    editor.value = '';
+    // Update character counter to show/hide limit based on platform
     updateCharCount();
-    updatePreview();
-    autoResize();
-    closeSidebar();
-    editor.focus();
 }
+
+// ============================================
+// Sidebar Functions - COMMENTED OUT
+// ============================================
+
+// function openSidebar() {
+//     draftsSidebar.classList.remove('hidden');
+//     sidebarOverlay.classList.remove('hidden');
+//     // Trigger reflow for animation
+//     void draftsSidebar.offsetWidth;
+//     draftsSidebar.classList.add('visible');
+//     sidebarOverlay.classList.add('visible');
+//     document.body.style.overflow = 'hidden';
+// }
+
+// function closeSidebar() {
+//     draftsSidebar.classList.remove('visible');
+//     sidebarOverlay.classList.remove('visible');
+//     document.body.style.overflow = '';
+//     setTimeout(() => {
+//         draftsSidebar.classList.add('hidden');
+//         sidebarOverlay.classList.add('hidden');
+//     }, 250);
+// }
+
+// function createNewDraft() {
+//     editor.value = '';
+//     updateCharCount();
+//     updatePreview();
+//     autoResize();
+//     closeSidebar();
+//     editor.focus();
+// }
 
 // ============================================
 // Profile Functions
@@ -408,18 +442,20 @@ copyLinkedinBtn.addEventListener('click', () => {
     copyToClipboard(editor.value, copyLinkedinBtn);
 });
 
-// Sidebar events
-draftsBtn.addEventListener('click', openSidebar);
-closeSidebarBtn.addEventListener('click', closeSidebar);
-sidebarOverlay.addEventListener('click', closeSidebar);
-newDraftBtn.addEventListener('click', createNewDraft);
+// ============================================
+// DRAFTS SIDEBAR EVENTS - COMMENTED OUT
+// ============================================
+// draftsBtn.addEventListener('click', openSidebar);
+// closeSidebarBtn.addEventListener('click', closeSidebar);
+// sidebarOverlay.addEventListener('click', closeSidebar);
+// newDraftBtn.addEventListener('click', createNewDraft);
 
 // Escape key closes sidebar
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !draftsSidebar.classList.contains('hidden')) {
-        closeSidebar();
-    }
-});
+// document.addEventListener('keydown', (e) => {
+//     if (e.key === 'Escape' && !draftsSidebar.classList.contains('hidden')) {
+//         closeSidebar();
+//     }
+// });
 
 // ============================================
 // Initialization
