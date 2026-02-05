@@ -1,0 +1,91 @@
+# CLAUDE.md
+
+## Project Overview
+
+**Post Formatter for LinkedIn & Threads** — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
+
+## Development Plan
+
+Проект разбит на мини-спринты. Текущий прогресс см. в плане.
+
+### MVP (Sprint 1-7)
+1. HTML + CSS каркас
+2. Редактор с auto-resize
+3. Unicode Bold/Italic (только латиница!)
+4. Thread splitting (500 символов)
+5. Copy to clipboard
+6. Supabase интеграция
+7. UI черновиков
+
+### V2 (Sprint 8+)
+- Ручное разбиение `///`
+- Owner Mode (аутентификация)
+- Локализация RU/EN
+
+## Tech Stack
+
+- **Frontend:** HTML5, CSS3, Vanilla JS (без фреймворков)
+- **Database:** Supabase (Sprint 6+)
+- **Design:** Material 3, Inter font
+- **Icons:** Font Awesome 6
+
+## Project Structure
+
+```
+/LinkedIn:Threads
+├── index.html          # Главная страница
+├── styles.css          # Стили (CSS переменные)
+├── app.js              # Логика приложения
+├── Main Requirements.md # Полная спецификация (RU)
+└── future_scope.md     # V2 функции (RU)
+```
+
+## Critical Implementation Rules
+
+### Unicode Formatting
+```javascript
+// Только латиница! Кириллица НЕ конвертируется
+toBold("Hello")  // → "𝐇𝐞𝐥𝐥𝐨"
+toBold("Привет") // → "Привет" (без изменений)
+```
+
+### Thread Splitting Algorithm
+- Лимит: 500 символов
+- Никогда не разрывать слова
+- Разбивать по пробелам/переносам
+- См. Main Requirements.md:58-71
+
+### CSS Variables (строго соблюдать)
+```css
+--bg-color: #F0F4F9;
+--card-bg: #FFFFFF;
+--text-primary: #1F1F1F;
+--accent-linkedin: #0A66C2;
+--accent-threads: #000000;
+--border-radius-lg: 24px;
+```
+
+## Database Schema (Sprint 6+)
+
+```sql
+CREATE TABLE drafts (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  content TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  preview_snippet TEXT
+);
+```
+
+## Development Workflow
+
+1. Читать Main Requirements.md перед реализацией
+2. Следовать CSS переменным из спецификации
+3. Тестировать Unicode только на латинице
+4. Проверять thread splitting на длинных текстах
+5. Запуск: двойной клик на index.html (Sprint 1-5)
+
+## Files to Reference
+
+- `Main Requirements.md` — Полная техническая спецификация
+- `future_scope.md` — Планы на V2
