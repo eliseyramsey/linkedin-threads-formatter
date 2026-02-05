@@ -8,14 +8,14 @@
 
 Проект разбит на мини-спринты. Текущий прогресс см. в плане.
 
-### MVP (Sprint 1-7)
-1. HTML + CSS каркас
-2. Редактор с auto-resize
-3. Unicode Bold/Italic (только латиница!)
-4. Thread splitting (500 символов)
-5. Copy to clipboard
-6. Supabase интеграция
-7. UI черновиков
+### MVP (Sprint 1-5) ✅
+1. ✅ HTML + CSS каркас
+2. ✅ Редактор с auto-resize
+3. ✅ Unicode Bold/Italic (только латиница!)
+4. ✅ Thread splitting (500 символов)
+5. ✅ Copy to clipboard
+~~6. Supabase интеграция~~ (отключено)
+~~7. UI черновиков~~ (отключено)
 
 ### V2 (Sprint 8+)
 - Ручное разбиение `///`
@@ -65,17 +65,9 @@ toBold("Привет") // → "Привет" (без изменений)
 --border-radius-lg: 24px;
 ```
 
-## Database Schema (Sprint 6+)
+## ~~Database Schema~~ (отключено)
 
-```sql
-CREATE TABLE drafts (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  content TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  preview_snippet TEXT
-);
-```
+~~Backend и база данных не используются в текущей версии~~
 
 ## Development Workflow
 
