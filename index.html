@@ -14,6 +14,18 @@
         <p>Используй этот инструмент для написания, форматирования, разбивки и предпросмотра твоих постов.</p>
     </section>
 
+    <!-- Tab Switcher - centered under CTA -->
+    <div class="tabs-container">
+        <button class="tab-btn active linkedin-active" id="linkedinTab" data-platform="linkedin">
+            <i class="fab fa-linkedin"></i>
+            LinkedIn
+        </button>
+        <button class="tab-btn" id="threadsTab" data-platform="threads">
+            <i class="fab fa-threads"></i>
+            Threads
+        </button>
+    </div>
+
     <main>
         <!-- Editor Section -->
         <div class="editor-section">
@@ -40,23 +52,15 @@
                     id="editor"
                     placeholder="Начните писать свой пост..."
                 ></textarea>
+                <!-- Copy button in editor footer -->
+                <button class="copy-btn-main" id="copyLinkedin">
+                    Копировать
+                </button>
             </div>
         </div>
 
         <!-- Preview Section -->
         <div class="preview-section">
-            <!-- Tab Switcher moved inside preview -->
-            <div class="tabs-container">
-                <button class="tab-btn active linkedin-active" id="linkedinTab" data-platform="linkedin">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn
-                </button>
-                <button class="tab-btn" id="threadsTab" data-platform="threads">
-                    <i class="fab fa-threads"></i>
-                    Threads
-                </button>
-            </div>
-
             <!-- Preview Area -->
             <div class="preview-area">
             <!-- LinkedIn Preview -->
@@ -107,9 +111,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="copy-btn-main" id="copyLinkedin">
-                    Копировать для LinkedIn
-                </button>
             </div>
 
             <!-- Threads Preview -->

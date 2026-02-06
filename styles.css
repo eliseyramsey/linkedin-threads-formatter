@@ -111,8 +111,8 @@ main {
     padding: 0 20px 40px;
     display: flex;
     flex-direction: row;
-    gap: 32px;
-    align-items: flex-start;
+    gap: 20px;
+    align-items: stretch;
 }
 
 /* Editor Section (Left) */
@@ -137,6 +137,9 @@ main {
     border-radius: var(--border-radius-lg);
     padding: 24px;
     box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* Toolbar at the top of editor */
@@ -151,8 +154,8 @@ main {
 
 textarea {
     width: 100%;
-    min-height: 400px;
-    max-height: 60vh;
+    flex: 1;
+    min-height: 200px;
     overflow-y: auto;
     border: none;
     resize: none;
@@ -214,14 +217,14 @@ textarea::placeholder {
     opacity: 0.7;
 }
 
-/* Tab Switcher - Inside Preview Section */
+/* Tab Switcher - Centered under CTA */
 .tabs-container {
     background: #E1E3E1;
     padding: 4px;
     border-radius: 50px;
     display: flex;
-    align-self: flex-start;
-    margin-bottom: 8px;
+    margin: 0 auto 24px;
+    width: fit-content;
 }
 
 .tab-btn {
@@ -255,8 +258,8 @@ textarea::placeholder {
 
 /* Preview Area */
 .preview-area {
+    flex: 1;
     min-height: 200px;
-    max-height: 60vh;
     overflow-y: auto;
 }
 
@@ -276,9 +279,10 @@ textarea::placeholder {
 /* LinkedIn Preview */
 .linkedin-post {
     background: white;
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-lg);
     border: 1px solid var(--border-color);
     padding: 16px;
+    max-width: 555px;
 }
 
 .post-header {
@@ -328,21 +332,18 @@ textarea::placeholder {
 }
 
 .copy-btn-main {
-    width: 100%;
     background: var(--accent-linkedin);
     color: white;
     border: none;
-    padding: 14px;
+    padding: 10px 20px;
     border-radius: var(--border-radius-lg);
     margin-top: 16px;
+    margin-left: auto;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    font-size: 13px;
+    display: block;
     transition: all var(--transition-fast);
 }
 
