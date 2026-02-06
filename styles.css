@@ -59,6 +59,30 @@ header {
     color: var(--accent-linkedin);
 }
 
+/* CTA Header */
+.cta-header {
+    width: 100%;
+    max-width: 1400px;
+    padding: 40px 20px 32px;
+    text-align: center;
+}
+
+.cta-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.cta-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
 .drafts-btn {
     display: flex;
     align-items: center;
@@ -751,6 +775,18 @@ textarea::placeholder {
     header {
         padding: 16px;
         max-width: 100%;
+    }
+
+    .cta-header {
+        padding: 24px 16px 20px;
+    }
+
+    .cta-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .cta-header p {
+        font-size: 1rem;
     }
 
     main {
