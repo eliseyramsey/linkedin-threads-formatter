@@ -745,6 +745,68 @@ textarea::placeholder {
     background: #333;
 }
 
+/* How To Section */
+.how-to {
+    width: 100%;
+    max-width: 1400px;
+    padding: 48px 20px 64px;
+}
+
+.how-to h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+}
+
+.how-to-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.how-to-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.how-to-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-color);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--accent-linkedin);
+    font-size: 16px;
+}
+
+.how-to-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.how-to-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.how-to-card code {
+    background: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: monospace;
+}
+
 /* Responsive - Tablet & Mobile */
 @media (max-width: 1024px) {
     /* Return to vertical layout on tablets and mobile */
@@ -768,6 +830,10 @@ textarea::placeholder {
 
     textarea {
         min-height: 250px;
+    }
+
+    .how-to-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -829,5 +895,17 @@ textarea::placeholder {
 
     .char-counter {
         align-self: flex-end;
+    }
+
+    .how-to {
+        padding: 32px 16px 48px;
+    }
+
+    .how-to-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .how-to h2 {
+        font-size: 1.25rem;
     }
 }
