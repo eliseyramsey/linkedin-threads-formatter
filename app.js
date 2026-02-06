@@ -413,7 +413,7 @@ function selectRandomProfile() {
 function updateProfileDisplay() {
     if (currentProfile) {
         linkedinAuthor.textContent = currentProfile.name;
-        linkedinMeta.innerHTML = `${currentProfile.title} • 2h • <i class="fas fa-globe"></i>`;
+        linkedinMeta.textContent = currentProfile.title;
     }
 }
 
