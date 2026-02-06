@@ -13,6 +13,11 @@ const charCounter = document.querySelector('.char-counter');
 const boldBtn = document.getElementById('boldBtn');
 const italicBtn = document.getElementById('italicBtn');
 const listBtn = document.getElementById('listBtn');
+const strikethroughBtn = document.getElementById('strikethroughBtn');
+const underlineBtn = document.getElementById('underlineBtn');
+const numberedListBtn = document.getElementById('numberedListBtn');
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
 const linkedinTab = document.getElementById('linkedinTab');
 const threadsTab = document.getElementById('threadsTab');
 const linkedinPreview = document.getElementById('linkedinPreview');
@@ -38,6 +43,77 @@ const linkedinMeta = document.getElementById('linkedinMeta');
 // ============================================
 const THREAD_LIMIT = 500;
 const LINKEDIN_LIMIT = 3000;
+
+// ============================================
+// Undo/Redo History
+// ============================================
+const editorHistory = {
+    stack: [''],
+    index: 0,
+    maxSize: 50,
+    isRestoring: false
+};
+
+let historyDebounceTimer = null;
+
+function historySave(state) {
+    if (editorHistory.isRestoring) return;
+
+    if (editorHistory.index < editorHistory.stack.length - 1) {
+        editorHistory.stack = editorHistory.stack.slice(0, editorHistory.index + 1);
+    }
+
+    if (editorHistory.stack[editorHistory.index] === state) return;
+
+    editorHistory.stack.push(state);
+
+    if (editorHistory.stack.length > editorHistory.maxSize) {
+        editorHistory.stack.shift();
+    }
+
+    editorHistory.index = editorHistory.stack.length - 1;
+    updateUndoRedoButtons();
+}
+
+function historyUndo() {
+    if (editorHistory.index <= 0) return;
+
+    editorHistory.index--;
+    editorHistory.isRestoring = true;
+    editor.value = editorHistory.stack[editorHistory.index];
+    editorHistory.isRestoring = false;
+
+    updatePreview();
+    updateCharCount();
+    autoResize();
+    updateUndoRedoButtons();
+}
+
+function historyRedo() {
+    if (editorHistory.index >= editorHistory.stack.length - 1) return;
+
+    editorHistory.index++;
+    editorHistory.isRestoring = true;
+    editor.value = editorHistory.stack[editorHistory.index];
+    editorHistory.isRestoring = false;
+
+    updatePreview();
+    updateCharCount();
+    autoResize();
+    updateUndoRedoButtons();
+}
+
+function updateUndoRedoButtons() {
+    undoBtn.disabled = editorHistory.index <= 0;
+    redoBtn.disabled = editorHistory.index >= editorHistory.stack.length - 1;
+}
+
+function debouncedHistorySave() {
+    clearTimeout(historyDebounceTimer);
+    historyDebounceTimer = setTimeout(() => {
+        historySave(editor.value);
+    }, 500);
+}
 
 // Random profiles for LinkedIn and Threads preview
 const PROFILES = [
@@ -93,34 +169,94 @@ const ITALIC_MAP = {
     'y': '𝘺', 'z': '𝘻'
 };
 
+// Reverse maps for toggle (bold/italic → regular)
+const BOLD_REVERSE = Object.fromEntries(
+    Object.entries(BOLD_MAP).map(([k, v]) => [v, k])
+);
+const ITALIC_REVERSE = Object.fromEntries(
+    Object.entries(ITALIC_MAP).map(([k, v]) => [v, k])
+);
+
 // ============================================
 // Text Formatting Functions
 // ============================================
 
 /**
- * Convert text to Unicode Bold (Latin characters only)
- * Cyrillic and other characters remain unchanged
+ * Toggle Unicode Bold (Latin only). Detects already-bold text and reverts.
  */
 function toBold(text) {
-    return [...text].map(char => BOLD_MAP[char] || char).join('');
+    const chars = [...text];
+    if (chars.some(c => BOLD_REVERSE[c])) {
+        return chars.map(c => BOLD_REVERSE[c] || c).join('');
+    }
+    return chars.map(c => BOLD_MAP[c] || c).join('');
 }
 
 /**
- * Convert text to Unicode Italic (Latin characters only)
- * Cyrillic and other characters remain unchanged
+ * Toggle Unicode Italic (Latin only). Detects already-italic text and reverts.
  */
 function toItalic(text) {
-    return [...text].map(char => ITALIC_MAP[char] || char).join('');
+    const chars = [...text];
+    if (chars.some(c => ITALIC_REVERSE[c])) {
+        return chars.map(c => ITALIC_REVERSE[c] || c).join('');
+    }
+    return chars.map(c => ITALIC_MAP[c] || c).join('');
 }
 
 /**
- * Add bullet point to selected lines
+ * Toggle bullet list. Removes bullets if already present.
+ * Replaces numbered list if detected.
  */
 function toList(text) {
-    return text.split('\n').map(line => {
-        const trimmed = line.trim();
-        if (trimmed && !trimmed.startsWith('•')) {
-            return '• ' + trimmed;
+    const lines = text.split('\n');
+    const hasBullets = lines.every(l => !l.trim() || l.trim().startsWith('•'));
+    if (hasBullets && lines.some(l => l.trim().startsWith('•'))) {
+        return lines.map(l => l.replace(/^\s*•\s?/, '')).join('\n');
+    }
+    // Strip numbering first, then add bullets
+    return lines.map(line => {
+        const stripped = line.replace(/^\s*\d+\.\s/, '').trim();
+        return stripped ? '• ' + stripped : line;
+    }).join('\n');
+}
+
+/**
+ * Toggle Unicode strikethrough (U+0336). Works with ALL characters.
+ */
+function toStrikethrough(text) {
+    if (text.includes('\u0336')) {
+        return text.replace(/\u0336/g, '');
+    }
+    return [...text].map(char => char + '\u0336').join('');
+}
+
+/**
+ * Toggle Unicode underline (U+0332). Works with ALL characters.
+ */
+function toUnderline(text) {
+    if (text.includes('\u0332')) {
+        return text.replace(/\u0332/g, '');
+    }
+    return [...text].map(char => char + '\u0332').join('');
+}
+
+/**
+ * Toggle numbered list. Removes numbering if already present.
+ * Replaces bullet list if detected.
+ */
+function toNumberedList(text) {
+    const lines = text.split('\n');
+    const hasNumbers = lines.every(l => !l.trim() || /^\d+\.\s/.test(l.trim()));
+    if (hasNumbers && lines.some(l => /^\d+\.\s/.test(l.trim()))) {
+        return lines.map(l => l.replace(/^\s*\d+\.\s?/, '')).join('\n');
+    }
+    // Strip bullets first, then add numbers
+    let num = 0;
+    return lines.map(line => {
+        const stripped = line.replace(/^\s*•\s?/, '').trim();
+        if (stripped) {
+            num++;
+            return `${num}. ${stripped}`;
         }
         return line;
     }).join('\n');
@@ -135,6 +271,8 @@ function applyFormatting(formatFn) {
 
     if (start === end) return; // No selection
 
+    historySave(editor.value);
+
     const selectedText = editor.value.substring(start, end);
     const formattedText = formatFn(selectedText);
 
@@ -144,6 +282,8 @@ function applyFormatting(formatFn) {
     editor.selectionStart = start;
     editor.selectionEnd = start + formattedText.length;
     editor.focus();
+
+    historySave(editor.value);
 
     // Trigger update
     updatePreview();
@@ -306,8 +446,22 @@ async function copyToClipboard(text, button) {
 // Character Counter with LinkedIn Limit Validation
 // ============================================
 
+/**
+ * Count visible characters (grapheme clusters).
+ * Ignores combining marks (strikethrough/underline) and counts
+ * surrogate pairs (bold/italic Unicode) as single characters.
+ */
+function countVisibleChars(text) {
+    if (Intl.Segmenter) {
+        const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+        return [...segmenter.segment(text)].length;
+    }
+    // Fallback: strip combining marks, count code points
+    return [...text.replace(/[\u0300-\u036f]/g, '')].length;
+}
+
 function updateCharCount() {
-    const currentLength = editor.value.length;
+    const currentLength = countVisibleChars(editor.value);
     charCount.textContent = currentLength;
 
     // Check if LinkedIn tab is active
@@ -426,12 +580,39 @@ editor.addEventListener('input', () => {
     updateCharCount();
     updatePreview();
     autoResize();
+    debouncedHistorySave();
+});
+
+// Prevent toolbar buttons from stealing focus/selection from editor
+document.querySelectorAll('.format-buttons .tool-btn').forEach(btn => {
+    btn.addEventListener('mousedown', (e) => e.preventDefault());
 });
 
 // Format buttons
 boldBtn.addEventListener('click', () => applyFormatting(toBold));
 italicBtn.addEventListener('click', () => applyFormatting(toItalic));
+strikethroughBtn.addEventListener('click', () => applyFormatting(toStrikethrough));
+underlineBtn.addEventListener('click', () => applyFormatting(toUnderline));
 listBtn.addEventListener('click', () => applyFormatting(toList));
+numberedListBtn.addEventListener('click', () => applyFormatting(toNumberedList));
+
+// Undo/Redo buttons
+undoBtn.addEventListener('click', historyUndo);
+redoBtn.addEventListener('click', historyRedo);
+
+// Keyboard shortcuts for Undo/Redo
+editor.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        historyUndo();
+        return;
+    }
+    if ((e.ctrlKey || e.metaKey) && ((e.key === 'z' && e.shiftKey) || e.key === 'y')) {
+        e.preventDefault();
+        historyRedo();
+        return;
+    }
+});
 
 // Tab switching
 linkedinTab.addEventListener('click', () => switchTab('linkedin'));

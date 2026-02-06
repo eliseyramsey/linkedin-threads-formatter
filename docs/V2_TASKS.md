@@ -8,9 +8,9 @@
 | T2 | Доп. форматирование + Undo/Redo | Medium | - |
 | T3 | Ручное разбиение `///` | Medium | - |
 | T4 | Загрузка картинок | High | - |
-| T5 | Иконка Threads | Low | - |
-| T6 | UI правки LinkedIn Preview | Medium | T1 |
-| T7 | How To секция | Low | T3 |
+| T5 | Иконка Threads | Low | - | - DONE
+| T6 | UI правки LinkedIn Preview | Medium | T1 | -DONE
+| T7 | How To секция | Low | T3 | - DONE
 
 ---
 
