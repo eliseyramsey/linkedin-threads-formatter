@@ -152,6 +152,8 @@ main {
 textarea {
     width: 100%;
     min-height: 400px;
+    max-height: 60vh;
+    overflow-y: auto;
     border: none;
     resize: none;
     font-family: 'Inter', sans-serif;
@@ -254,6 +256,8 @@ textarea::placeholder {
 /* Preview Area */
 .preview-area {
     min-height: 200px;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .preview-content {
@@ -830,6 +834,7 @@ textarea::placeholder {
 
     textarea {
         min-height: 250px;
+        max-height: 50vh;
     }
 
     .how-to-grid {
@@ -866,6 +871,7 @@ textarea::placeholder {
 
     textarea {
         min-height: 200px;
+        max-height: 45vh;
         font-size: 15px;
     }
 
