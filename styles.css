@@ -196,6 +196,20 @@ textarea::placeholder {
     transform: scale(0.95);
 }
 
+.tool-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-color);
+    margin: 0 4px;
+    align-self: center;
+}
+
 .char-counter {
     font-size: 13px;
     color: var(--text-secondary);
@@ -898,6 +912,10 @@ textarea::placeholder {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+
+    .format-buttons {
+        flex-wrap: wrap;
     }
 
     .char-counter {
