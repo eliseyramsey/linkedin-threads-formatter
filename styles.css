@@ -346,9 +346,17 @@ textarea::placeholder {
     gap: 8px;
 }
 
-.reactions-img {
+.reaction-icons {
+    display: flex;
+}
+
+.reaction-icon {
+    width: 20px;
     height: 20px;
-    width: auto;
+    border-radius: 50%;
+    margin-right: -4px;
+    border: 1.5px solid white;
+    object-fit: cover;
 }
 
 .engagement-count {
