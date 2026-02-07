@@ -295,40 +295,45 @@ function applyFormatting(formatFn) {
 // ============================================
 
 /**
- * Split text into threads respecting word boundaries
+ * Auto-split a single block of text respecting word boundaries
+ * @param {string} text - Text block to split
+ * @param {number} limit - Character limit per chunk
+ * @returns {string[]} Array of chunks
+ */
+function autoSplitBlock(text, limit) {
+    const chunks = [];
+    let remaining = text.trim();
+
+    while (remaining.length > limit) {
+        let splitIndex = remaining.lastIndexOf(' ', limit);
+        const newlineIndex = remaining.lastIndexOf('\n', limit);
+        if (newlineIndex > splitIndex) splitIndex = newlineIndex;
+        if (splitIndex === -1 || splitIndex === 0) splitIndex = limit;
+        chunks.push(remaining.substring(0, splitIndex).trim());
+        remaining = remaining.substring(splitIndex).trim();
+    }
+
+    if (remaining.length > 0) chunks.push(remaining);
+    return chunks;
+}
+
+/**
+ * Split text into threads. Manual breaks (///) take priority over auto-splitting.
  * @param {string} text - Text to split
  * @param {number} limit - Character limit per thread (default 500)
  * @returns {string[]} Array of thread chunks
  */
 function splitIntoThreads(text, limit = THREAD_LIMIT) {
-    const chunks = [];
-    let remaining = text.trim();
-
-    while (remaining.length > limit) {
-        // Find the last space within the limit
-        let splitIndex = remaining.lastIndexOf(' ', limit);
-
-        // Also check for newline
-        const newlineIndex = remaining.lastIndexOf('\n', limit);
-        if (newlineIndex > splitIndex) {
-            splitIndex = newlineIndex;
+    const manualBlocks = text.split('///').map(s => s.trim()).filter(Boolean);
+    const result = [];
+    for (const block of manualBlocks) {
+        if (block.length <= limit) {
+            result.push(block);
+        } else {
+            result.push(...autoSplitBlock(block, limit));
         }
-
-        // If no space/newline found, hard cut at limit
-        if (splitIndex === -1 || splitIndex === 0) {
-            splitIndex = limit;
-        }
-
-        chunks.push(remaining.substring(0, splitIndex).trim());
-        remaining = remaining.substring(splitIndex).trim();
     }
-
-    // Add remaining text if any
-    if (remaining.length > 0) {
-        chunks.push(remaining);
-    }
-
-    return chunks;
+    return result;
 }
 
 // ============================================
