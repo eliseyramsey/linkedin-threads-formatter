@@ -101,11 +101,10 @@
 
 ### Milestone 5: Polish & Accessibility (P1)
 
-- [ ] **V3-10:** Favicon integration
-  - SVG primary + PNG fallback (16x16, 32x32, 180x180)
+- [x] **V3-10:** Favicon integration
+  - PNG favicon (Favicon_Black.png)
   - `<link rel="icon">` + `<link rel="apple-touch-icon">`
   - `<meta name="theme-color">`
-  - ⚠️ BLOCKED: favicon design not yet decided
 
 - [x] **V3-11:** Accessibility — prefers-reduced-motion
   - `@media (prefers-reduced-motion: reduce)` — disable all animations
