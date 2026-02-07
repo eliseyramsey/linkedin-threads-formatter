@@ -64,33 +64,33 @@
 
 ### Milestone 2: Theming System (P0)
 
-- [ ] **V3-2:** Dynamic color theme — CSS variables + JS class switching
+- [x] **V3-2:** Dynamic color theme — CSS variables + JS class switching
   - Define `.theme-threads` variables (black/gray palette)
   - Define `.theme-linkedin` variables (blue palette)
   - JS: toggle `<body>` class on tab switch
   - CSS: `transition: 300ms ease` on themed elements
   - Default theme: `theme-threads`
 
-- [ ] **V3-3:** Gradient text for CTA heading
+- [x] **V3-3:** Gradient text for CTA heading
   - `background: var(--accent-gradient)` + `background-clip: text`
   - `@supports` fallback to solid `var(--accent-primary)`
 
 ### Milestone 3: Themed Components (P1)
 
-- [ ] **V3-4:** Themed how-to cards
+- [x] **V3-4:** Themed how-to cards
   - Border: `1px solid var(--howto-card-border)`
   - Background: `var(--howto-card-bg)`
   - Hover: `translateY(-4px)` + shadow increase
   - `transition: 200ms ease`
 
-- [ ] **V3-5:** How-to cards scroll animation
+- [x] **V3-5:** How-to cards scroll animation
   - `IntersectionObserver` triggers `fadeUp` on scroll into view
   - 100ms stagger delay per card
   - `@keyframes fadeUp` — opacity 0→1, translateY 20px→0
 
 ### Milestone 4: Animations (P1)
 
-- [ ] **V3-6:** Background floating icons
+- [x] **V3-6:** Background floating icons
   - 5–8 Font Awesome brand icons (Threads or LinkedIn)
   - `position: absolute`, `pointer-events: none`, `z-index: 0`
   - Opacity `0.03–0.05`, size `40–80px`

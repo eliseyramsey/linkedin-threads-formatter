@@ -539,18 +539,18 @@ function autoResize() {
 
 function switchTab(platform) {
     if (platform === 'linkedin') {
-        linkedinTab.classList.add('active', 'linkedin-active');
-        linkedinTab.classList.remove('threads-active');
-        threadsTab.classList.remove('active', 'threads-active', 'linkedin-active');
+        linkedinTab.classList.add('active');
+        threadsTab.classList.remove('active');
         linkedinPreview.classList.remove('hidden');
         threadsPreview.classList.add('hidden');
     } else {
-        threadsTab.classList.add('active', 'threads-active');
-        threadsTab.classList.remove('linkedin-active');
-        linkedinTab.classList.remove('active', 'linkedin-active', 'threads-active');
+        threadsTab.classList.add('active');
+        linkedinTab.classList.remove('active');
         threadsPreview.classList.remove('hidden');
         linkedinPreview.classList.add('hidden');
     }
+    // Switch theme
+    document.body.className = platform === 'linkedin' ? 'theme-linkedin' : 'theme-threads';
     // Update character counter to show/hide limit based on platform
     updateCharCount();
 }
@@ -679,6 +679,27 @@ copyLinkedinBtn.addEventListener('click', () => {
 //         closeSidebar();
 //     }
 // });
+
+// ============================================
+// How-to Card Scroll Animation
+// ============================================
+
+const howToCards = document.querySelectorAll('.how-to-card');
+
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const card = entry.target;
+            const index = [...howToCards].indexOf(card);
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, index * 100);
+            cardObserver.unobserve(card);
+        }
+    });
+}, { threshold: 0.1 });
+
+howToCards.forEach(card => cardObserver.observe(card));
 
 // ============================================
 // Modal Functions
