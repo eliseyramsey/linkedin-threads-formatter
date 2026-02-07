@@ -1,6 +1,6 @@
 /**
+ * ThreadThis — threadthis.day
  * Post Formatter for LinkedIn & Threads
- * Main Application Logic
  */
 
 // ============================================

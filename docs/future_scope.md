@@ -1,4 +1,4 @@
-# Post Formatter — Future Scope (V2)
+# ThreadThis — Future Scope (V2)
 
 ## 1. Аватары для превью
 **Стиль:** Реалистичные фото (как на LinkedIn)

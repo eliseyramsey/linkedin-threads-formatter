@@ -1,6 +1,6 @@
-# Post Formatter для LinkedIn & Threads
+# ThreadThis
 
-SPA для форматирования постов в социальные сети с Unicode-стилизацией и автоматическим разбиением на треды.
+**threadthis.day** — SPA для форматирования постов LinkedIn & Threads с Unicode-стилизацией и автоматическим разбиением на треды.
 
 ![LinkedIn Preview](assets/linkedin-preview.png)
 ![Threads Preview](assets/threads-preview.png)
