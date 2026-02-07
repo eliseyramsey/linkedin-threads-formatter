@@ -4,7 +4,7 @@
 
 **ThreadThis** (threadthis.day) — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
 
-**Текущая версия:** V3 (Visual & Branding upgrade)
+**Текущая версия:** V3 ✅ (Visual & Branding upgrade — completed)
 **Стек:** HTML5, CSS3, Vanilla JS — без фреймворков, без бэкенда, 100% клиент-сайд.
 
 ## Project Structure
@@ -42,8 +42,8 @@ Unicode Bold/Italic, thread splitting (500 chars), copy to clipboard, side-by-si
 ### V2 ✅
 Threads icon, avatars (20 with gender matching), CTA header, manual split `///`, strikethrough/underline, lists, undo/redo, LinkedIn engagement UI, how-to cards.
 
-### V3 (Current Scope)
-See `docs/V3_PRD.md` for full requirements. Summary below.
+### V3 ✅
+Visual identity & legal compliance. See `docs/V3_PRD.md` for full requirements.
 
 ---
 
@@ -202,15 +202,13 @@ toBold("Привет") // → "Привет" (unchanged)
 - 60fps target — only animate `transform` and `opacity`
 - No external dependencies
 
-## What NOT to Change in V3
+## Core Logic (do not change without reason)
 
-- Thread splitting algorithm
-- Unicode formatting logic
-- Undo/redo system
+- Thread splitting algorithm (`splitIntoThreads`, `autoSplitBlock`)
+- Unicode formatting logic (BOLD_MAP, ITALIC_MAP, combining marks)
+- Undo/redo system (editorHistory, 50-state stack)
 - Copy to clipboard behavior
-- Avatar/profile rotation system
-- Editor toolbar functionality
-- LinkedIn/Threads preview rendering logic
+- Avatar/profile rotation system (20 avatars, gender matching)
 
 ## Files to Reference
 
@@ -218,6 +216,43 @@ toBold("Привет") // → "Привет" (unchanged)
 |------|---------|
 | `docs/V3_PRD.md` | Full V3 requirements, acceptance criteria, task list |
 | `docs/Main Requirements.md` | Original technical spec (V1/V2 algorithms) |
-| `index.html` | SPA structure, tab switcher, editor, preview, how-to |
-| `styles.css` | All styling, CSS variables, responsive breakpoints |
-| `app.js` | Formatting, splitting, undo/redo, preview rendering |
+| `docs/TASKS.md` | Task tracker with milestones (V1–V4+) |
+| `docs/PLANNING.md` | Vision, architecture, tech stack |
+| `index.html` | SPA structure, tab switcher, editor, preview, how-to, footer, modals |
+| `styles.css` | All styling, CSS variables, themes, responsive, animations |
+| `app.js` | Formatting, splitting, undo/redo, preview, modals, scroll observer |
+| `images/Favicon_Black.png` | Favicon — black version (active) |
+| `images/Favicon_White.png` | Favicon — white version (for dark bg) |
+
+---
+
+## Session Log: 2026-02-07 — V3 Complete
+
+### What was done
+Created V3 PRD, updated CLAUDE.md, PLANNING.md, TASKS.md. Implemented all 12 V3 tasks:
+
+| Task | Description | PR |
+|------|-------------|-----|
+| V3-1 | Threads as default tab | #11 |
+| V3-2 | Dynamic color theme (CSS vars + JS) | #13 |
+| V3-3 | Gradient CTA text | #13 |
+| V3-4 | Themed how-to cards | #14 |
+| V3-5 | Scroll animations (IntersectionObserver) | #14 |
+| V3-6 | Background floating icons | #15 |
+| V3-7 | Footer with legal links | #12 |
+| V3-8 | Modal dialogs (Privacy/Terms) | #12 |
+| V3-9 | Legal content (English) | #12 |
+| V3-10 | Favicon (Threads @ + ///) | #17 |
+| V3-11 | Accessibility (reduced-motion, focus trap) | #16 |
+| V3-12 | Responsive for all V3 elements | #16 |
+
+### Key decisions made
+- **Threads palette:** Black/gray minimalism (#000, #333, #444)
+- **LinkedIn palette:** Blue (#0A66C2, #004182, #D0E8FF)
+- **Animations:** Subtle — floating icons at 7% opacity, CSS-only drift
+- **Legal pages:** Footer links + modal dialogs (not separate pages)
+- **Contact:** Links to linkedin.com/in/eliseyramsey
+- **Footer:** "Vibecoded by @EliseyRamsey" with LinkedIn link
+- **Favicon:** Custom design — Threads @ symbol + /// slashes, black on transparent
+- **How-to slash icon:** Changed from fa-slash to text `///`
+- **Themed elements:** CTA heading, how-to cards, editor card/toolbar, copy button, tab switcher
