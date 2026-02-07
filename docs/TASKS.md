@@ -107,13 +107,13 @@
   - `<meta name="theme-color">`
   - ⚠️ BLOCKED: favicon design not yet decided
 
-- [ ] **V3-11:** Accessibility — prefers-reduced-motion
+- [x] **V3-11:** Accessibility — prefers-reduced-motion
   - `@media (prefers-reduced-motion: reduce)` — disable all animations
   - Disable floating icons, card fade-up, hover effects
   - Modal focus trap verified
   - WCAG 2.1 AA contrast check
 
-- [ ] **V3-12:** Responsive adaptation for all V3 elements
+- [x] **V3-12:** Responsive adaptation for all V3 elements
   - Footer: vertical link layout on mobile
   - Floating icons: 2–3 max on mobile, none on <600px if needed
   - Modals: full-width on mobile, proper scroll

@@ -744,11 +744,29 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
     });
 });
 
-// Close modal: Escape key
+// Close modal: Escape key + focus trap
 document.addEventListener('keydown', (e) => {
+    const activeModal = document.querySelector('.modal-overlay.active');
+    if (!activeModal) return;
+
     if (e.key === 'Escape') {
-        const activeModal = document.querySelector('.modal-overlay.active');
-        if (activeModal) closeModal(activeModal);
+        closeModal(activeModal);
+        return;
+    }
+
+    // Focus trap: Tab cycles within modal
+    if (e.key === 'Tab') {
+        const focusable = activeModal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
     }
 });
 
