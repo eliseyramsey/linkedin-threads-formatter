@@ -43,13 +43,13 @@
   - Init `currentPlatform = 'threads'` in JS
   - Init char counter in Threads format
 
-- [ ] **V3-7:** Add `<footer>` with legal links
+- [x] **V3-7:** Add `<footer>` with legal links
   - © 2026 ThreadThis. All rights reserved.
   - Links: Privacy Policy | Terms of Service | Contact
   - Thin divider line above footer
   - Minimal styling, muted text color
 
-- [ ] **V3-8:** Modal dialogs for legal pages
+- [x] **V3-8:** Modal dialogs for legal pages
   - Overlay `rgba(0,0,0,0.5)`
   - White scrollable card with close button (X)
   - Close: X button, overlay click, Escape key
@@ -57,7 +57,7 @@
   - `role="dialog"`, `aria-modal="true"`, focus trap
   - Fade-in animation on open
 
-- [ ] **V3-9:** Write Privacy Policy & Terms of Service content
+- [x] **V3-9:** Write Privacy Policy & Terms of Service content
   - Language: English
   - Privacy: no data collection, client-side only, no cookies
   - Terms: "as is" service, user responsible for content
