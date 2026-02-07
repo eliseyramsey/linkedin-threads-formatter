@@ -252,6 +252,8 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: 1px solid var(--howto-card-border, transparent);
+    transition: border-color var(--transition-theme);
 }
 
 /* Toolbar at the top of editor */
@@ -261,7 +263,8 @@ main {
     align-items: center;
     margin-bottom: 16px;
     padding-bottom: 16px;
-    border-bottom: 1px solid #F0F2F5;
+    border-bottom: 1px solid var(--howto-card-border, #F0F2F5);
+    transition: border-color var(--transition-theme);
 }
 
 textarea {
@@ -300,8 +303,8 @@ textarea::placeholder {
 }
 
 .tool-btn:hover {
-    background: var(--bg-color);
-    color: var(--text-primary);
+    background: var(--accent-light);
+    color: var(--accent-primary);
 }
 
 .tool-btn:active {
@@ -894,14 +897,17 @@ textarea::placeholder {
     width: 100%;
     max-width: 1400px;
     padding: 48px 20px 64px;
+    position: relative;
+    z-index: 1;
 }
 
 .how-to h2 {
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--accent-primary);
     margin-bottom: 32px;
+    transition: color var(--transition-theme);
 }
 
 .how-to-grid {
@@ -977,6 +983,8 @@ textarea::placeholder {
     max-width: 1400px;
     padding: 0 20px;
     margin-top: auto;
+    position: relative;
+    z-index: 1;
 }
 
 .footer-content {
@@ -1248,6 +1256,18 @@ textarea::placeholder {
     .bg-icons {
         display: none;
     }
+
+    .modal-card {
+        max-height: 90vh;
+    }
+
+    .modal-header {
+        padding: 20px 20px 12px;
+    }
+
+    .modal-body {
+        padding: 20px 20px 28px;
+    }
 }
 
 /* Reduced motion */
@@ -1266,18 +1286,16 @@ textarea::placeholder {
         animation: none !important;
         opacity: 0 !important;
     }
-}
 
-@media (max-width: 600px) {
-    .modal-card {
-        max-height: 90vh;
+    .preview-content {
+        animation: none;
     }
 
-    .modal-header {
-        padding: 20px 20px 12px;
+    .modal-overlay {
+        transition: none;
     }
 
-    .modal-body {
-        padding: 20px 20px 28px;
+    .cta-header h1 {
+        transition: none;
     }
 }
