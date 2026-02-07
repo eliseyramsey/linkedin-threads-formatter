@@ -77,13 +77,13 @@
 
 ### Milestone 3: Themed Components (P1)
 
-- [ ] **V3-4:** Themed how-to cards
+- [x] **V3-4:** Themed how-to cards
   - Border: `1px solid var(--howto-card-border)`
   - Background: `var(--howto-card-bg)`
   - Hover: `translateY(-4px)` + shadow increase
   - `transition: 200ms ease`
 
-- [ ] **V3-5:** How-to cards scroll animation
+- [x] **V3-5:** How-to cards scroll animation
   - `IntersectionObserver` triggers `fadeUp` on scroll into view
   - 100ms stagger delay per card
   - `@keyframes fadeUp` — opacity 0→1, translateY 20px→0

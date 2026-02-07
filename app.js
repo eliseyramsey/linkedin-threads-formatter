@@ -681,6 +681,27 @@ copyLinkedinBtn.addEventListener('click', () => {
 // });
 
 // ============================================
+// How-to Card Scroll Animation
+// ============================================
+
+const howToCards = document.querySelectorAll('.how-to-card');
+
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const card = entry.target;
+            const index = [...howToCards].indexOf(card);
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, index * 100);
+            cardObserver.unobserve(card);
+        }
+    });
+}, { threshold: 0.1 });
+
+howToCards.forEach(card => cardObserver.observe(card));
+
+// ============================================
 // Modal Functions
 // ============================================
 

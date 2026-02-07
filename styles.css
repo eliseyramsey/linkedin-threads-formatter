@@ -839,7 +839,24 @@ textarea::placeholder {
     border-radius: var(--border-radius-md);
     padding: 24px;
     box-shadow: var(--shadow-soft);
-    transition: background var(--transition-theme), border-color var(--transition-theme);
+    transition: background var(--transition-theme), border-color var(--transition-theme), transform 0.2s ease, box-shadow 0.2s ease;
+    /* Scroll animation: hidden initially */
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.how-to-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.how-to-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.how-to-card.visible:hover {
+    transform: translateY(-4px);
 }
 
 .how-to-icon {
@@ -1150,7 +1167,22 @@ textarea::placeholder {
     .how-to h2 {
         font-size: 1.25rem;
     }
+}
 
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .how-to-card {
+        opacity: 1;
+        transform: none;
+        transition: background var(--transition-theme), border-color var(--transition-theme);
+    }
+
+    .how-to-card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 600px) {
     .modal-card {
         max-height: 90vh;
     }
