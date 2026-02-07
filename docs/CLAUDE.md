@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Post Formatter for LinkedIn & Threads** — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
+**ThreadThis** (threadthis.day) — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
 
 **UI:** Side-by-side layout — Rich Text Editor слева (max 600px), Live Preview справа (flex). На экранах <1024px переключается на вертикальный layout.
 
