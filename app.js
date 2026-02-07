@@ -115,32 +115,59 @@ function debouncedHistorySave() {
     }, 500);
 }
 
-// Random profiles for LinkedIn and Threads preview
-const PROFILES = [
-    { name: "Sergey Brin", title: "CEO" },
-    { name: "Ivan Petrov", title: "Salesforce Developer" },
-    { name: "Anna Kozlova", title: "Product Manager" },
-    { name: "Michael Chen", title: "Software Engineer" },
-    { name: "Elena Smirnova", title: "UX Designer" },
-    { name: "Alex Johnson", title: "Data Scientist" },
-    { name: "Maria Garcia", title: "Marketing Director" },
-    { name: "David Kim", title: "Tech Lead" },
-    { name: "Olga Novikova", title: "HR Manager" },
-    { name: "James Wilson", title: "Founder" },
-    { name: "Natalia Volkova", title: "Business Analyst" },
-    { name: "Robert Taylor", title: "CTO" },
-    { name: "Svetlana Orlova", title: "Project Manager" },
-    { name: "Chris Anderson", title: "DevOps Engineer" },
-    { name: "Dmitry Sokolov", title: "Frontend Developer" },
-    { name: "Sarah Miller", title: "Content Strategist" },
-    { name: "Pavel Morozov", title: "Backend Developer" },
-    { name: "Emma Thompson", title: "Growth Hacker" },
-    { name: "Andrei Volkov", title: "Solutions Architect" },
-    { name: "Lisa Brown", title: "VP of Engineering" }
+// Avatar images for preview (separated by gender for correct matching)
+const MALE_AVATARS = [
+    'images/avatars/avatar-02.jpg',
+    'images/avatars/avatar-04.jpg',
+    'images/avatars/avatar-06.jpg',
+    'images/avatars/avatar-08.jpg',
+    'images/avatars/avatar-10.jpg',
+    'images/avatars/avatar-11.jpg',
+    'images/avatars/avatar-13.jpg',
+    'images/avatars/avatar-15.jpg',
+    'images/avatars/avatar-17.jpg',
+    'images/avatars/avatar-19.jpg'
+];
+const FEMALE_AVATARS = [
+    'images/avatars/avatar-01.jpg',
+    'images/avatars/avatar-03.jpg',
+    'images/avatars/avatar-05.jpg',
+    'images/avatars/avatar-07.jpg',
+    'images/avatars/avatar-09.jpg',
+    'images/avatars/avatar-12.jpg',
+    'images/avatars/avatar-14.jpg',
+    'images/avatars/avatar-16.jpg',
+    'images/avatars/avatar-18.jpg',
+    'images/avatars/avatar-20.jpg'
 ];
 
-// Current random profile (selected on page load)
+// Random profiles for LinkedIn and Threads preview
+const PROFILES = [
+    { name: "Sergey Brin", title: "CEO", gender: "m" },
+    { name: "Ivan Petrov", title: "Salesforce Developer", gender: "m" },
+    { name: "Anna Kozlova", title: "Product Manager", gender: "f" },
+    { name: "Michael Chen", title: "Software Engineer", gender: "m" },
+    { name: "Elena Smirnova", title: "UX Designer", gender: "f" },
+    { name: "Alex Johnson", title: "Data Scientist", gender: "m" },
+    { name: "Maria Garcia", title: "Marketing Director", gender: "f" },
+    { name: "David Kim", title: "Tech Lead", gender: "m" },
+    { name: "Olga Novikova", title: "HR Manager", gender: "f" },
+    { name: "James Wilson", title: "Founder", gender: "m" },
+    { name: "Natalia Volkova", title: "Business Analyst", gender: "f" },
+    { name: "Robert Taylor", title: "CTO", gender: "m" },
+    { name: "Svetlana Orlova", title: "Project Manager", gender: "f" },
+    { name: "Chris Anderson", title: "DevOps Engineer", gender: "m" },
+    { name: "Dmitry Sokolov", title: "Frontend Developer", gender: "m" },
+    { name: "Sarah Miller", title: "Content Strategist", gender: "f" },
+    { name: "Pavel Morozov", title: "Backend Developer", gender: "m" },
+    { name: "Emma Thompson", title: "Growth Hacker", gender: "f" },
+    { name: "Andrei Volkov", title: "Solutions Architect", gender: "m" },
+    { name: "Lisa Brown", title: "VP of Engineering", gender: "f" }
+];
+
+// Current random profile and avatar (selected on page load)
 let currentProfile = null;
+let currentAvatar = null;
 
 // ============================================
 // Unicode Character Maps (Latin only!)
@@ -359,10 +386,12 @@ function updatePreview() {
 function renderThreadsPreview(text) {
     const username = currentProfile ? currentProfile.name.split(' ')[0].toLowerCase() : 'username';
 
+    const avatarImg = currentAvatar ? `<img src="${currentAvatar}" alt="Avatar">` : '';
+
     if (!text.trim()) {
         threadsChain.innerHTML = `
             <div class="thread-item">
-                <div class="thread-avatar"></div>
+                <div class="thread-avatar">${avatarImg}</div>
                 <div class="thread-body">
                     <div class="thread-header">
                         <div class="thread-name">${username}</div>
@@ -384,7 +413,7 @@ function renderThreadsPreview(text) {
 
     threadsChain.innerHTML = chunks.map((chunk, index) => `
         <div class="thread-item">
-            <div class="thread-avatar"></div>
+            <div class="thread-avatar">${avatarImg}</div>
             ${index < chunks.length - 1 ? '<div class="thread-line"></div>' : ''}
             <div class="thread-body">
                 <div class="thread-header">
@@ -566,6 +595,8 @@ function switchTab(platform) {
 function selectRandomProfile() {
     const randomIndex = Math.floor(Math.random() * PROFILES.length);
     currentProfile = PROFILES[randomIndex];
+    const pool = currentProfile.gender === 'f' ? FEMALE_AVATARS : MALE_AVATARS;
+    currentAvatar = pool[Math.floor(Math.random() * pool.length)];
     return currentProfile;
 }
 
@@ -573,6 +604,12 @@ function updateProfileDisplay() {
     if (currentProfile) {
         linkedinAuthor.textContent = currentProfile.name;
         linkedinMeta.textContent = currentProfile.title;
+    }
+    if (currentAvatar) {
+        const avatarEl = document.querySelector('.linkedin-post .avatar');
+        if (avatarEl) {
+            avatarEl.innerHTML = `<img src="${currentAvatar}" alt="Avatar">`;
+        }
     }
 }
 
