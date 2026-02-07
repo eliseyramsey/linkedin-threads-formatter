@@ -681,6 +681,57 @@ copyLinkedinBtn.addEventListener('click', () => {
 // });
 
 // ============================================
+// Modal Functions
+// ============================================
+
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Focus the close button
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
+}
+
+function closeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Footer link clicks → open modals
+document.querySelectorAll('.footer-link[data-modal]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modalId = link.dataset.modal + 'Modal';
+        openModal(modalId);
+    });
+});
+
+// Close modal: X button
+document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const modal = btn.closest('.modal-overlay');
+        if (modal) closeModal(modal);
+    });
+});
+
+// Close modal: overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal(overlay);
+    });
+});
+
+// Close modal: Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) closeModal(activeModal);
+    }
+});
+
+// ============================================
 // Initialization
 // ============================================
 
