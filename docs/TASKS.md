@@ -90,7 +90,7 @@
 
 ### Milestone 4: Animations (P1)
 
-- [ ] **V3-6:** Background floating icons
+- [x] **V3-6:** Background floating icons
   - 5–8 Font Awesome brand icons (Threads or LinkedIn)
   - `position: absolute`, `pointer-events: none`, `z-index: 0`
   - Opacity `0.03–0.05`, size `40–80px`
