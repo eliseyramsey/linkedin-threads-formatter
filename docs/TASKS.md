@@ -64,14 +64,14 @@
 
 ### Milestone 2: Theming System (P0)
 
-- [ ] **V3-2:** Dynamic color theme — CSS variables + JS class switching
+- [x] **V3-2:** Dynamic color theme — CSS variables + JS class switching
   - Define `.theme-threads` variables (black/gray palette)
   - Define `.theme-linkedin` variables (blue palette)
   - JS: toggle `<body>` class on tab switch
   - CSS: `transition: 300ms ease` on themed elements
   - Default theme: `theme-threads`
 
-- [ ] **V3-3:** Gradient text for CTA heading
+- [x] **V3-3:** Gradient text for CTA heading
   - `background: var(--accent-gradient)` + `background-clip: text`
   - `@supports` fallback to solid `var(--accent-primary)`
 

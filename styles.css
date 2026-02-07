@@ -14,8 +14,34 @@
     --shadow-medium: 0 4px 12px rgba(0,0,0,0.08);
     --transition-fast: 0.15s ease;
     --transition-normal: 0.25s ease;
+    --transition-theme: 0.3s ease;
     --color-warning: #f59e0b;
     --color-error: #ef4444;
+}
+
+/* Dynamic Theme Variables */
+.theme-threads {
+    --accent-primary: #000000;
+    --accent-secondary: #333333;
+    --accent-light: #E5E5E5;
+    --accent-gradient-start: #000000;
+    --accent-gradient-end: #444444;
+    --howto-card-border: rgba(0, 0, 0, 0.12);
+    --howto-card-bg: rgba(0, 0, 0, 0.03);
+    --howto-icon-bg: rgba(0, 0, 0, 0.06);
+    --howto-icon-color: #000000;
+}
+
+.theme-linkedin {
+    --accent-primary: #0A66C2;
+    --accent-secondary: #004182;
+    --accent-light: #D0E8FF;
+    --accent-gradient-start: #0A66C2;
+    --accent-gradient-end: #004182;
+    --howto-card-border: rgba(10, 102, 194, 0.15);
+    --howto-card-bg: rgba(10, 102, 194, 0.04);
+    --howto-icon-bg: rgba(10, 102, 194, 0.08);
+    --howto-icon-color: #0A66C2;
 }
 
 /* Reset & Base */
@@ -70,9 +96,20 @@ header {
 .cta-header h1 {
     font-size: 2.5rem;
     font-weight: 600;
-    color: var(--text-primary);
     line-height: 1.2;
     margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent-gradient-start), var(--accent-gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: var(--transition-theme);
+}
+
+@supports not (background-clip: text) {
+    .cta-header h1 {
+        color: var(--accent-primary);
+        -webkit-text-fill-color: unset;
+    }
 }
 
 .cta-header p {
@@ -262,12 +299,9 @@ textarea::placeholder {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-.tab-btn.linkedin-active {
-    color: var(--accent-linkedin) !important;
-}
-
-.tab-btn.threads-active {
-    color: var(--accent-threads) !important;
+.tab-btn.active {
+    color: var(--accent-primary) !important;
+    transition: color var(--transition-theme);
 }
 
 /* Preview Area */
@@ -353,7 +387,7 @@ textarea::placeholder {
 }
 
 .copy-btn-main {
-    background: var(--accent-linkedin);
+    background: var(--accent-primary);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -365,11 +399,11 @@ textarea::placeholder {
     font-weight: 600;
     font-size: 13px;
     display: block;
-    transition: all var(--transition-fast);
+    transition: background var(--transition-theme), transform var(--transition-fast);
 }
 
 .copy-btn-main:hover {
-    background: #094c91;
+    background: var(--accent-secondary);
     transform: translateY(-1px);
 }
 
@@ -800,23 +834,26 @@ textarea::placeholder {
 }
 
 .how-to-card {
-    background: var(--card-bg);
+    background: var(--howto-card-bg, var(--card-bg));
+    border: 1px solid var(--howto-card-border, transparent);
     border-radius: var(--border-radius-md);
     padding: 24px;
     box-shadow: var(--shadow-soft);
+    transition: background var(--transition-theme), border-color var(--transition-theme);
 }
 
 .how-to-icon {
     width: 40px;
     height: 40px;
-    background: var(--bg-color);
+    background: var(--howto-icon-bg, var(--bg-color));
     border-radius: var(--border-radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
-    color: var(--accent-linkedin);
+    color: var(--howto-icon-color, var(--accent-primary));
     font-size: 16px;
+    transition: background var(--transition-theme), color var(--transition-theme);
 }
 
 .how-to-card h3 {
