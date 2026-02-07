@@ -4,122 +4,220 @@
 
 **ThreadThis** (threadthis.day) — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
 
-**UI:** Side-by-side layout — Rich Text Editor слева (max 600px), Live Preview справа (flex). На экранах <1024px переключается на вертикальный layout.
-
-## Development Plan
-
-Проект разбит на мини-спринты. Текущий прогресс см. в плане.
-
-### MVP (Sprint 1-5) ✅
-1. ✅ HTML + CSS каркас
-2. ✅ Редактор с auto-resize
-3. ✅ Unicode Bold/Italic (только латиница!)
-4. ✅ Thread splitting (500 символов)
-5. ✅ Copy to clipboard
-6. ✅ Side-by-side layout с responsive breakpoints
-~~7. Supabase интеграция~~ (отключено)
-~~8. UI черновиков~~ (отключено)
-
-### V2 Roadmap
-
-#### Phase 1 (Quick Wins)
-- T5: Иконка Threads в preview
-- T1: Аватары для превью постов
-- T6-extra: CTA header над редактором
-
-#### Phase 2 (Core Features)
-- T3: Ручное разбиение `///` на треды
-- T2: Дополнительное форматирование (Strikethrough, Underline, Lists) + Undo/Redo
-
-#### Phase 3 (Polish)
-- T6: Улучшения LinkedIn UI (лайки, репосты, комментарии)
-- T7: "How To" секция в footer
-
-#### Phase 4 (Advanced)
-- T4: Загрузка картинок и Emoji Picker
-- Supabase backend (Owner Mode, сохранение черновиков)
-
-## Tech Stack
-
-- **Frontend:** HTML5, CSS3, Vanilla JS (без фреймворков)
-- **Database:** Supabase (V2 Phase 4)
-- **Design:** Material 3, Inter font
-- **Icons:** Font Awesome 6
+**Текущая версия:** V3 (Visual & Branding upgrade)
+**Стек:** HTML5, CSS3, Vanilla JS — без фреймворков, без бэкенда, 100% клиент-сайд.
 
 ## Project Structure
 
 ```
 /LinkedIn:Threads
+├── index.html              # Main SPA page
+├── styles.css              # Material 3 styles (~950 lines)
+├── app.js                  # Application logic (~700 lines)
+├── images/
+│   ├── avatars/            # 20 professional headshots (avatar-01..20.jpg)
+│   ├── Linkedin-*.png      # LinkedIn reaction icons
+│   └── favicon/            # Favicon files (V3)
 ├── docs/
-│   ├── CLAUDE.md           # Development guide
-│   ├── Main Requirements.md # Full spec
-│   ├── future_scope.md     # V2 features
-│   └── V2_TASKS.md         # V2 task breakdown
-├── assets/                 # Screenshots
-├── index.html              # Main page
-├── styles.css              # Material 3 styles
-└── app.js                  # Application logic
+│   ├── CLAUDE.md           # THIS FILE — development guide
+│   ├── Main Requirements.md # Full technical spec (V1/V2)
+│   ├── V3_PRD.md           # V3 requirements (current scope)
+│   ├── V1_scope_done.md    # Completed V1 features
+│   └── V2_scope_done.md    # Completed V2 features
+└── README.md
 ```
 
 ## Development Commands
 
 ```bash
-# Run local dev server
-python3 -m http.server 8080
-# Or: npx serve
-
-# Open in browser
-http://localhost:8080
+python3 -m http.server 8080    # Local dev server
+# Open: http://localhost:8080
 ```
 
-## Critical Implementation Rules
+## Version History
 
-### Character Limits
-- **LinkedIn:** 3000 символов
-- **Threads:** 500 символов (автоматическое разбиение)
+### V1 (MVP) ✅
+Unicode Bold/Italic, thread splitting (500 chars), copy to clipboard, side-by-side layout, responsive.
 
-### UI Layout
-- **Desktop (≥1024px):** Side-by-side — Editor (max 600px) + Preview (flex)
-- **Mobile (<1024px):** Vertical stack — Editor → Preview
+### V2 ✅
+Threads icon, avatars (20 with gender matching), CTA header, manual split `///`, strikethrough/underline, lists, undo/redo, LinkedIn engagement UI, how-to cards.
+
+### V3 (Current Scope)
+See `docs/V3_PRD.md` for full requirements. Summary below.
+
+---
+
+## V3 Implementation Guide
+
+### V3-1: Tab Priority — Threads First
+
+**What:** Threads is the default active tab on page load.
+
+**Changes:**
+- `index.html`: Swap button order in `.tab-switcher` — Threads button first with `active` class
+- `index.html`: `.linkedin-preview` gets `hidden`, `.threads-preview` visible
+- `app.js`: `currentPlatform` initializes as `'threads'`
+- `styles.css`: Initial accent = Threads colors
+
+### V3-2: Dynamic Color Theme
+
+**What:** UI colors change based on selected platform. Two theme classes on `<body>`.
+
+**Theme CSS variables:**
+```css
+/* Default: Threads */
+.theme-threads {
+  --accent-primary: #000000;
+  --accent-secondary: #333333;
+  --accent-light: #E5E5E5;
+  --accent-gradient: linear-gradient(135deg, #000000, #444444);
+  --howto-card-border: rgba(0, 0, 0, 0.12);
+  --howto-card-bg: rgba(0, 0, 0, 0.03);
+}
+
+.theme-linkedin {
+  --accent-primary: #0A66C2;
+  --accent-secondary: #004182;
+  --accent-light: #D0E8FF;
+  --accent-gradient: linear-gradient(135deg, #0A66C2, #004182);
+  --howto-card-border: rgba(10, 102, 194, 0.15);
+  --howto-card-bg: rgba(10, 102, 194, 0.04);
+}
+```
+
+**Switching:** JS toggles class on `<body>` when tab changes. CSS `transition: 300ms ease` on themed elements.
+
+**Themed elements:** CTA heading (gradient text), how-to cards (border + bg), tab switcher active state, character counter accent.
+
+### V3-3: Gradient CTA Text
+
+```css
+.cta-header h1 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+```
+Fallback: `@supports` check, solid `var(--accent-primary)` if gradient text unsupported.
+
+### V3-4 & V3-5: How-to Cards
+
+- Border: `1px solid var(--howto-card-border)`
+- Background: `var(--howto-card-bg)`
+- Hover: `translateY(-4px)` + increased shadow, `transition: 200ms ease`
+- Scroll animation: `IntersectionObserver` triggers `fadeUp` with 100ms stagger per card
+
+### V3-6: Background Floating Icons
+
+- 5–8 Font Awesome icons (`.fa-brands .fa-threads` or `.fa-linkedin`)
+- `position: absolute`, scattered across page
+- Opacity: `0.03–0.05`, size: `40–80px`
+- CSS `@keyframes` drift animation, `15–30s` cycle
+- `pointer-events: none`, `z-index: 0`
+- Icons match current platform, fade out/in on tab switch
+- **Mobile (<600px):** reduce to 2–3 or disable
+- **`prefers-reduced-motion`:** disable completely
+
+### V3-7, V3-8, V3-9: Footer + Legal Modals
+
+**Footer:** `<footer>` at page bottom with `© 2026 ThreadThis` + links (Privacy Policy | Terms of Service | Contact).
+
+**Modals:**
+- Overlay: `rgba(0,0,0,0.5)`
+- Card: white, scrollable, close button (X)
+- Close triggers: X button, overlay click, Escape key
+- `body { overflow: hidden }` when open
+- Accessibility: `role="dialog"`, `aria-modal="true"`, focus trap
+
+**Content language:** English. Key points:
+- Privacy: No data collection, client-side only, no cookies
+- Terms: "As is" service, user responsible for content
+
+### V3-10: Favicon
+
+Technical integration ready. Design TBD (separate task).
+- SVG primary + PNG fallback (16x16, 32x32, 180x180)
+- `<link rel="icon">` + `<link rel="apple-touch-icon">`
+- `<meta name="theme-color">` for mobile browsers
+
+### V3-11: Accessibility
+
+- `prefers-reduced-motion`: all animations disabled
+- Modal focus trap
+- WCAG 2.1 AA contrast
+- Semantic `<footer>`, `<nav>`
+
+### V3-12: Responsive
+
+- Desktop (≥1024px): full animations, side-by-side
+- Tablet (600–1024px): reduced animations, vertical
+- Mobile (<600px): minimal/no background icons, vertical footer
+
+---
+
+## Critical Rules (all versions)
 
 ### Unicode Formatting
 ```javascript
-// Только латиница! Кириллица НЕ конвертируется
+// Latin ONLY — Cyrillic does NOT convert
 toBold("Hello")  // → "𝐇𝐞𝐥𝐥𝐨"
-toBold("Привет") // → "Привет" (без изменений)
+toBold("Привет") // → "Привет" (unchanged)
+// Strikethrough/Underline work with ALL characters (combining marks)
 ```
 
-### Thread Splitting Algorithm
-- Лимит: 500 символов
-- Никогда не разрывать слова
-- Разбивать по пробелам/переносам
-- См. Main Requirements.md:58-71
+### Character Limits
+- **LinkedIn:** 3000 chars
+- **Threads:** 500 chars per segment (auto-split)
 
-### CSS Variables (строго соблюдать)
+### Thread Splitting
+- Manual breaks: `///` (highest priority)
+- Auto-split at 500 chars, respects word boundaries
+- Never break mid-word
+
+### Layout Breakpoints
+- **≥1024px:** Side-by-side (editor max 600px + preview flex)
+- **<1024px:** Vertical stack
+- **<600px:** Reduced typography, single-column how-to grid
+
+### Existing CSS Variables (keep these)
 ```css
 --bg-color: #F0F4F9;
 --card-bg: #FFFFFF;
 --text-primary: #1F1F1F;
---accent-linkedin: #0A66C2;
---accent-threads: #000000;
+--text-secondary: #444746;
+--border-color: #E0E2E5;
 --border-radius-lg: 24px;
+--border-radius-md: 16px;
+--border-radius-sm: 8px;
+--shadow-soft: 0 4px 8px rgba(0,0,0,0.02);
+--shadow-medium: 0 4px 12px rgba(0,0,0,0.08);
+--color-warning: #f59e0b;
+--color-error: #ef4444;
 ```
 
-## ~~Database Schema~~ (отключено)
+### Performance
+- CSS-only animations (`@keyframes`), no JS timers
+- `will-change: transform` for animated elements
+- 60fps target — only animate `transform` and `opacity`
+- No external dependencies
 
-~~Backend и база данных не используются в текущей версии~~
+## What NOT to Change in V3
 
-## Development Workflow
-
-1. Читать Main Requirements.md перед реализацией
-2. Следовать CSS переменным из спецификации
-3. Тестировать Unicode только на латинице (a-z, A-Z)
-4. Проверять thread splitting на длинных текстах
-5. **Запуск:** `python3 -m http.server 8080` → открыть `localhost:8080`
-6. **Тестировать responsiveness:** проверить breakpoint <1024px (вертикальный layout)
+- Thread splitting algorithm
+- Unicode formatting logic
+- Undo/redo system
+- Copy to clipboard behavior
+- Avatar/profile rotation system
+- Editor toolbar functionality
+- LinkedIn/Threads preview rendering logic
 
 ## Files to Reference
 
-- `Main Requirements.md` — Полная техническая спецификация
-- `future_scope.md` — Планы на V2
-- `V2_TASKS.md` — Detailed V2 task breakdown with IDs
+| File | Purpose |
+|------|---------|
+| `docs/V3_PRD.md` | Full V3 requirements, acceptance criteria, task list |
+| `docs/Main Requirements.md` | Original technical spec (V1/V2 algorithms) |
+| `index.html` | SPA structure, tab switcher, editor, preview, how-to |
+| `styles.css` | All styling, CSS variables, responsive breakpoints |
+| `app.js` | Formatting, splitting, undo/redo, preview rendering |

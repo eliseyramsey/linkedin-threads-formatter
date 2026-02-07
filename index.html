@@ -16,13 +16,13 @@
 
     <!-- Tab Switcher - centered under CTA -->
     <div class="tabs-container">
-        <button class="tab-btn active linkedin-active" id="linkedinTab" data-platform="linkedin">
-            <i class="fab fa-linkedin"></i>
-            LinkedIn
-        </button>
-        <button class="tab-btn" id="threadsTab" data-platform="threads">
+        <button class="tab-btn active threads-active" id="threadsTab" data-platform="threads">
             <i class="fab fa-threads"></i>
             Threads
+        </button>
+        <button class="tab-btn" id="linkedinTab" data-platform="linkedin">
+            <i class="fab fa-linkedin"></i>
+            LinkedIn
         </button>
     </div>
 
@@ -81,7 +81,7 @@
             <!-- Preview Area -->
             <div class="preview-area">
             <!-- LinkedIn Preview -->
-            <div id="linkedinPreview" class="preview-content">
+            <div id="linkedinPreview" class="preview-content hidden">
                 <div class="linkedin-post">
                     <div class="post-header">
                         <div class="avatar"></div>
@@ -131,7 +131,7 @@
             </div>
 
             <!-- Threads Preview -->
-            <div id="threadsPreview" class="preview-content hidden">
+            <div id="threadsPreview" class="preview-content">
                 <div class="threads-chain" id="threadsChain">
                     <!-- Thread items will be generated dynamically -->
                     <div class="thread-item">
