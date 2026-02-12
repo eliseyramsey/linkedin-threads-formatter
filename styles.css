@@ -268,6 +268,8 @@ main {
     flex: 1;
     min-width: 0;
     max-width: 600px;
+    position: relative;
+    z-index: 10;
 }
 
 /* Preview Section (Right) */
@@ -290,6 +292,7 @@ main {
     height: 100%;
     border: 1px solid var(--howto-card-border, transparent);
     transition: border-color var(--transition-theme);
+    overflow: visible;
 }
 
 /* Toolbar at the top of editor */
@@ -502,19 +505,90 @@ textarea::placeholder {
     color: var(--text-primary);
 }
 
+/* Editor Footer */
+.editor-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    position: relative;
+}
+
+/* Emoji Picker */
+.emoji-picker-container {
+    position: relative;
+}
+
+.emoji-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast), color var(--transition-theme), border-color var(--transition-theme);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.emoji-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    transition: all var(--transition-fast);
+}
+
+.emoji-picker {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 9999;
+}
+
+.emoji-picker.active {
+    display: block;
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.emoji-item {
+    background: none;
+    border: none;
+    padding: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    transition: background var(--transition-fast);
+}
+
+.emoji-item:hover {
+    background: var(--bg-color);
+}
+
 .copy-btn-main {
     background: var(--accent-primary);
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: var(--border-radius-lg);
-    margin-top: 16px;
-    margin-left: auto;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     font-size: 13px;
-    display: block;
     transition: background var(--transition-theme), transform var(--transition-fast);
 }
 
@@ -616,6 +690,7 @@ textarea::placeholder {
 .threads-chain {
     display: flex;
     flex-direction: column;
+    max-width: 85%;
 }
 
 .thread-item {
@@ -934,7 +1009,7 @@ textarea::placeholder {
     max-width: 1400px;
     padding: 48px 20px 64px;
     position: relative;
-    z-index: 1;
+    z-index: -1;
 }
 
 .how-to h2 {
