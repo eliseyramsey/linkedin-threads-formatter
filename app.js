@@ -45,6 +45,144 @@ const THREAD_LIMIT = 500;
 const LINKEDIN_LIMIT = 3000;
 
 // ============================================
+// Internationalization (i18n)
+// ============================================
+const i18n = {
+    en: {
+        cta_title: "Get your post ready to publish",
+        cta_subtitle: "Use this tool to write, format, split, and preview your posts.",
+        placeholder: "Start writing your post...",
+        copy: "Copy",
+        copied: "Copied!",
+        howto_title: "How to Use",
+        howto_format_title: "Formatting",
+        howto_format_desc: "Bold and Italic work only with Latin characters (a-z, A-Z). Strikethrough and underline work with any characters, including Cyrillic. Undo (Ctrl+Z) and redo (Ctrl+Shift+Z) available via buttons or keyboard.",
+        howto_split_title: "Auto-Split",
+        howto_split_desc: "For Threads, text is automatically split into parts of 500 characters with numbering 1/n, 2/n, etc.",
+        howto_manual_title: "Manual Split",
+        howto_manual_desc: "Insert <code>///</code> in text to specify thread break point. Takes priority over auto-split.",
+        howto_copy_title: "Copying",
+        howto_copy_desc: "LinkedIn — one button copies the entire post. Threads — separate button for each thread segment.",
+        footer_copy: "© 2026 ThreadThis. All rights reserved.",
+        footer_privacy: "Privacy Policy",
+        footer_terms: "Terms of Service",
+        footer_contact: "Contact",
+        preview_placeholder: "Your post will appear here...",
+        thread_placeholder: "Your thread will appear here...",
+        tooltip_bold: "Bold (Latin only)",
+        tooltip_italic: "Italic (Latin only)",
+        tooltip_strike: "Strikethrough",
+        tooltip_underline: "Underline",
+        tooltip_list: "Bullet list",
+        tooltip_numbered: "Numbered list",
+        tooltip_undo: "Undo (Ctrl+Z)",
+        tooltip_redo: "Redo (Ctrl+Shift+Z)"
+    },
+    ru: {
+        cta_title: "Подготовь свой пост к публикации",
+        cta_subtitle: "Используй этот инструмент для написания, форматирования, разбивки и предпросмотра твоих постов.",
+        placeholder: "Начните писать свой пост...",
+        copy: "Копировать",
+        copied: "Скопировано!",
+        howto_title: "Как пользоваться",
+        howto_format_title: "Форматирование",
+        howto_format_desc: "Bold и Italic работают только с латиницей (a-z, A-Z). Зачёркивание и подчёркивание работают с любыми символами, включая кириллицу. Отмена (Ctrl+Z) и повтор (Ctrl+Shift+Z) доступны через кнопки или клавиатуру.",
+        howto_split_title: "Авто-разбивка",
+        howto_split_desc: "Для Threads текст автоматически разбивается на части по 500 символов с нумерацией 1/n, 2/n и т.д.",
+        howto_manual_title: "Ручная разбивка",
+        howto_manual_desc: "Вставь <code>///</code> в текст, чтобы указать место разрыва треда. Имеет приоритет над авто-разбивкой.",
+        howto_copy_title: "Копирование",
+        howto_copy_desc: "LinkedIn — одна кнопка копирует весь пост. Threads — отдельная кнопка для каждого блока треда.",
+        footer_copy: "© 2026 ThreadThis. Все права защищены.",
+        footer_privacy: "Политика конфиденциальности",
+        footer_terms: "Условия использования",
+        footer_contact: "Контакты",
+        preview_placeholder: "Ваш пост появится здесь...",
+        thread_placeholder: "Ваш тред появится здесь...",
+        tooltip_bold: "Жирный (латиница)",
+        tooltip_italic: "Курсив (латиница)",
+        tooltip_strike: "Зачёркнутый",
+        tooltip_underline: "Подчёркнутый",
+        tooltip_list: "Маркированный список",
+        tooltip_numbered: "Нумерованный список",
+        tooltip_undo: "Отменить (Ctrl+Z)",
+        tooltip_redo: "Повторить (Ctrl+Shift+Z)"
+    }
+};
+
+let currentLang = 'en';
+
+/**
+ * Get translated string
+ */
+function t(key) {
+    return i18n[currentLang][key] || i18n['en'][key] || key;
+}
+
+/**
+ * Detect user's preferred language
+ */
+function detectLanguage() {
+    const saved = localStorage.getItem('lang');
+    if (saved && (saved === 'en' || saved === 'ru')) {
+        return saved;
+    }
+    const browserLang = navigator.language || navigator.languages?.[0] || 'en';
+    return browserLang.startsWith('ru') ? 'ru' : 'en';
+}
+
+/**
+ * Apply translations to all elements with data-i18n attributes
+ */
+function applyTranslations() {
+    // Text content
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        el.textContent = t(key);
+    });
+
+    // HTML content (for elements with code tags, etc.)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.dataset.i18nHtml;
+        el.innerHTML = t(key);
+    });
+
+    // Placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        el.placeholder = t(key);
+    });
+
+    // Update tooltips
+    document.getElementById('boldBtn').title = t('tooltip_bold');
+    document.getElementById('italicBtn').title = t('tooltip_italic');
+    document.getElementById('strikethroughBtn').title = t('tooltip_strike');
+    document.getElementById('underlineBtn').title = t('tooltip_underline');
+    document.getElementById('listBtn').title = t('tooltip_list');
+    document.getElementById('numberedListBtn').title = t('tooltip_numbered');
+    document.getElementById('undoBtn').title = t('tooltip_undo');
+    document.getElementById('redoBtn').title = t('tooltip_redo');
+
+    // Update html lang attribute
+    document.documentElement.lang = currentLang;
+}
+
+/**
+ * Set language and save preference
+ */
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    applyTranslations();
+    updatePreview();
+
+    // Update toggle buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+}
+
+// ============================================
 // Undo/Redo History
 // ============================================
 const editorHistory = {
@@ -418,7 +556,7 @@ function updatePreview() {
     const text = editor.value;
 
     // Update LinkedIn preview
-    linkedinText.textContent = text || 'Ваш пост появится здесь...';
+    linkedinText.textContent = text || t('preview_placeholder');
 
     // Update Threads preview
     renderThreadsPreview(text);
@@ -440,7 +578,7 @@ function renderThreadsPreview(text) {
                     <div class="thread-header">
                         <div class="thread-name">${username}</div>
                     </div>
-                    <div class="thread-text">Ваш тред появится здесь...</div>
+                    <div class="thread-text">${t('thread_placeholder')}</div>
                     <div class="thread-actions">
                         <button class="thread-action-btn"><i class="far fa-heart"></i></button>
                         <button class="thread-action-btn"><i class="far fa-comment"></i></button>
@@ -470,7 +608,7 @@ function renderThreadsPreview(text) {
                     <button class="thread-action-btn"><i class="far fa-comment"></i></button>
                     <button class="thread-action-btn"><i class="fas fa-retweet"></i></button>
                     <button class="thread-action-btn"><i class="far fa-paper-plane"></i></button>
-                    <button class="copy-mini" data-index="${index}">Копировать</button>
+                    <button class="copy-mini" data-index="${index}">${t('copy')}</button>
                 </div>
             </div>
         </div>
@@ -506,17 +644,16 @@ async function copyToClipboard(text, button) {
         await navigator.clipboard.writeText(text);
 
         // Visual feedback
-        const originalHtml = button.innerHTML;
-        button.innerHTML = 'Скопировано!';
+        const originalText = button.textContent;
+        button.textContent = t('copied');
         button.classList.add('copied');
 
         setTimeout(() => {
-            button.innerHTML = originalHtml;
+            button.textContent = originalText;
             button.classList.remove('copied');
         }, 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
-        alert('Не удалось скопировать текст');
     }
 }
 
@@ -815,10 +952,24 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ============================================
+// Language Toggle Event Listeners
+// ============================================
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+    });
+});
+
+// ============================================
 // Initialization
 // ============================================
 
 function init() {
+    // Initialize language (detect or use saved)
+    currentLang = detectLanguage();
+    setLanguage(currentLang);
+
     // Select random profile on page load
     selectRandomProfile();
     updateProfileDisplay();
