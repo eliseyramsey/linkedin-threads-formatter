@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,9 +28,15 @@
         <i class="fab fa-linkedin bg-icon" style="top:85%;right:9%"></i>
     </div>
 
+    <!-- Language Toggle -->
+    <div class="lang-toggle" id="langToggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+
     <section class="cta-header">
-        <h1>Подготовь свой пост к публикации</h1>
-        <p>Используй этот инструмент для написания, форматирования, разбивки и предпросмотра твоих постов.</p>
+        <h1 data-i18n="cta_title">Get your post ready to publish</h1>
+        <p data-i18n="cta_subtitle">Use this tool to write, format, split, and preview your posts.</p>
     </section>
 
     <!-- Tab Switcher - centered under CTA -->
@@ -86,11 +92,12 @@
                 <!-- Textarea below toolbar -->
                 <textarea
                     id="editor"
-                    placeholder="Начните писать свой пост..."
+                    data-i18n-placeholder="placeholder"
+                    placeholder="Start writing your post..."
                 ></textarea>
                 <!-- Copy button in editor footer -->
-                <button class="copy-btn-main" id="copyLinkedin">
-                    Копировать
+                <button class="copy-btn-main" id="copyLinkedin" data-i18n="copy">
+                    Copy
                 </button>
             </div>
         </div>
@@ -171,27 +178,27 @@
     </main>
 
     <section class="how-to">
-        <h2>Как пользоваться</h2>
+        <h2 data-i18n="howto_title">How to Use</h2>
         <div class="how-to-grid">
             <div class="how-to-card">
                 <div class="how-to-icon"><i class="fas fa-bold"></i></div>
-                <h3>Форматирование</h3>
-                <p>Bold и Italic работают только с латиницей (a-z, A-Z). Зачёркивание и подчёркивание работают с любыми символами, включая кириллицу. Отмена (Ctrl+Z) и повтор (Ctrl+Shift+Z) доступны через кнопки или клавиатуру.</p>
+                <h3 data-i18n="howto_format_title">Formatting</h3>
+                <p data-i18n="howto_format_desc">Bold and Italic work only with Latin characters (a-z, A-Z). Strikethrough and underline work with any characters, including Cyrillic. Undo (Ctrl+Z) and redo (Ctrl+Shift+Z) available via buttons or keyboard.</p>
             </div>
             <div class="how-to-card">
                 <div class="how-to-icon"><i class="fas fa-scissors"></i></div>
-                <h3>Авто-разбивка</h3>
-                <p>Для Threads текст автоматически разбивается на части по 500 символов с нумерацией 1/n, 2/n и т.д.</p>
+                <h3 data-i18n="howto_split_title">Auto-Split</h3>
+                <p data-i18n="howto_split_desc">For Threads, text is automatically split into parts of 500 characters with numbering 1/n, 2/n, etc.</p>
             </div>
             <div class="how-to-card">
                 <div class="how-to-icon" style="font-weight:700;font-size:14px;letter-spacing:-1px;">///</div>
-                <h3>Ручная разбивка</h3>
-                <p>Вставь <code>///</code> в текст, чтобы указать место разрыва треда. Имеет приоритет над авто-разбивкой.</p>
+                <h3 data-i18n="howto_manual_title">Manual Split</h3>
+                <p data-i18n-html="howto_manual_desc">Insert <code>///</code> in text to specify thread break point. Takes priority over auto-split.</p>
             </div>
             <div class="how-to-card">
                 <div class="how-to-icon"><i class="fas fa-copy"></i></div>
-                <h3>Копирование</h3>
-                <p>LinkedIn — одна кнопка копирует весь пост. Threads — отдельная кнопка для каждого блока треда.</p>
+                <h3 data-i18n="howto_copy_title">Copying</h3>
+                <p data-i18n="howto_copy_desc">LinkedIn — one button copies the entire post. Threads — separate button for each thread segment.</p>
             </div>
         </div>
     </section>
@@ -199,13 +206,13 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-content">
-            <span class="footer-copy">&copy; 2026 ThreadThis. All rights reserved.</span>
+            <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 ThreadThis. All rights reserved.</span>
             <nav class="footer-links">
-                <a href="#" class="footer-link" data-modal="privacy">Privacy Policy</a>
+                <a href="#" class="footer-link" data-modal="privacy" data-i18n="footer_privacy">Privacy Policy</a>
                 <span class="footer-sep">|</span>
-                <a href="#" class="footer-link" data-modal="terms">Terms of Service</a>
+                <a href="#" class="footer-link" data-modal="terms" data-i18n="footer_terms">Terms of Service</a>
                 <span class="footer-sep">|</span>
-                <a href="https://www.linkedin.com/in/eliseyramsey" target="_blank" rel="noopener" class="footer-link">Contact</a>
+                <a href="https://www.linkedin.com/in/eliseyramsey" target="_blank" rel="noopener" class="footer-link" data-i18n="footer_contact">Contact</a>
             </nav>
             <span class="footer-vibe">Vibecoded by <a href="https://www.linkedin.com/in/eliseyramsey" target="_blank" rel="noopener">@EliseyRamsey</a></span>
         </div>
