@@ -654,8 +654,8 @@ async function copyToClipboard(text, button) {
             button.textContent = originalText;
             button.classList.remove('copied');
         }, 2000);
-    } catch (err) {
-        console.error('Failed to copy:', err);
+    } catch {
+        // Silent fail — clipboard API not available
     }
 }
 
@@ -870,7 +870,7 @@ emojiPicker.addEventListener('click', (e) => {
 
         // Trigger update
         updatePreview();
-        saveToHistory();
+        historySave(editor.value);
 
         emojiPicker.classList.remove('active');
     }
