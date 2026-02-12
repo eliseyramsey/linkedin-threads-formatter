@@ -18,6 +18,8 @@ const underlineBtn = document.getElementById('underlineBtn');
 const numberedListBtn = document.getElementById('numberedListBtn');
 const undoBtn = document.getElementById('undoBtn');
 const redoBtn = document.getElementById('redoBtn');
+const emojiBtn = document.getElementById('emojiBtn');
+const emojiPicker = document.getElementById('emojiPicker');
 const linkedinTab = document.getElementById('linkedinTab');
 const threadsTab = document.getElementById('threadsTab');
 const linkedinPreview = document.getElementById('linkedinPreview');
@@ -840,6 +842,39 @@ editor.addEventListener('keydown', (e) => {
 // Tab switching
 linkedinTab.addEventListener('click', () => switchTab('linkedin'));
 threadsTab.addEventListener('click', () => switchTab('threads'));
+
+// Emoji Picker
+emojiBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    emojiPicker.classList.toggle('active');
+});
+
+// Close emoji picker when clicking outside
+document.addEventListener('click', (e) => {
+    if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+        emojiPicker.classList.remove('active');
+    }
+});
+
+// Insert emoji at cursor position
+emojiPicker.addEventListener('click', (e) => {
+    if (e.target.classList.contains('emoji-item')) {
+        const emoji = e.target.dataset.emoji;
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const text = editor.value;
+
+        editor.value = text.substring(0, start) + emoji + text.substring(end);
+        editor.selectionStart = editor.selectionEnd = start + emoji.length;
+        editor.focus();
+
+        // Trigger update
+        updatePreview();
+        saveToHistory();
+
+        emojiPicker.classList.remove('active');
+    }
+});
 
 // Copy LinkedIn button
 copyLinkedinBtn.addEventListener('click', () => {
