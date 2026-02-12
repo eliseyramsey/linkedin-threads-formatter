@@ -322,7 +322,8 @@ function applyFormatting(formatFn) {
 // ============================================
 
 /**
- * Auto-split a single block of text respecting word boundaries
+ * Smart auto-split text with priority hierarchy for natural break points.
+ * Priority: paragraph > line break > sentence end > clause end > word > hard cut
  * @param {string} text - Text block to split
  * @param {number} limit - Character limit per chunk
  * @returns {string[]} Array of chunks
@@ -330,12 +331,55 @@ function applyFormatting(formatFn) {
 function autoSplitBlock(text, limit) {
     const chunks = [];
     let remaining = text.trim();
+    const minChunkSize = Math.floor(limit * 0.3); // 30% minimum to avoid tiny orphans
 
     while (remaining.length > limit) {
-        let splitIndex = remaining.lastIndexOf(' ', limit);
-        const newlineIndex = remaining.lastIndexOf('\n', limit);
-        if (newlineIndex > splitIndex) splitIndex = newlineIndex;
-        if (splitIndex === -1 || splitIndex === 0) splitIndex = limit;
+        const window = remaining.substring(0, limit);
+        let splitIndex = -1;
+
+        // Priority 1: Paragraph break (\n\n)
+        const paraIndex = window.lastIndexOf('\n\n');
+        if (paraIndex > minChunkSize) {
+            splitIndex = paraIndex;
+        }
+
+        // Priority 2: Line break (\n)
+        if (splitIndex === -1) {
+            const lineIndex = window.lastIndexOf('\n');
+            if (lineIndex > minChunkSize) {
+                splitIndex = lineIndex;
+            }
+        }
+
+        // Priority 3: End of sentence (. ! ? …) followed by space
+        if (splitIndex === -1) {
+            const sentenceMatch = window.match(/.*[.!?…]\s/s);
+            if (sentenceMatch && sentenceMatch[0].length > minChunkSize) {
+                splitIndex = sentenceMatch[0].length - 1;
+            }
+        }
+
+        // Priority 4: End of clause (, ; : —) followed by space
+        if (splitIndex === -1) {
+            const clauseMatch = window.match(/.*[,;:—]\s/s);
+            if (clauseMatch && clauseMatch[0].length > minChunkSize) {
+                splitIndex = clauseMatch[0].length - 1;
+            }
+        }
+
+        // Priority 5: Word boundary (space)
+        if (splitIndex === -1) {
+            splitIndex = window.lastIndexOf(' ');
+            if (splitIndex <= minChunkSize) {
+                splitIndex = -1; // Too early, try hard cut
+            }
+        }
+
+        // Priority 6: Hard cut at limit (emergency)
+        if (splitIndex <= 0) {
+            splitIndex = limit;
+        }
+
         chunks.push(remaining.substring(0, splitIndex).trim());
         remaining = remaining.substring(splitIndex).trim();
     }
