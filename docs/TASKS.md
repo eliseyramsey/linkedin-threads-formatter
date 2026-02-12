@@ -121,11 +121,52 @@
 
 ---
 
-## V4+ (Future — not started)
+## V4 (UX & Internationalization) — CURRENT
+
+- [x] **V4-1:** Bilingual UI (EN/RU toggle)
+  - Floating toggle button top-right corner
+  - Browser language auto-detection
+  - localStorage persistence
+  - All UI text translatable via `data-i18n` attributes
+  - PR: #18
+
+- [x] **V4-2:** Smart thread splitting
+  - Natural break points: paragraph → line → sentence → clause → word
+  - Minimum chunk 30% of limit to avoid fragments
+  - PR: #19
+
+- [x] **V4-3:** LinkedIn Repost icon
+  - Replace Share icon with Repost in LinkedIn engagement UI
+  - PR: #20
+
+- [x] **V4-5:** Emoji picker
+  - Insert at cursor position
+  - Popular emojis grid (24 emojis, 6-column)
+  - PR: #21
+
+- [ ] **V4-7:** SEO optimization
+  - Meta tags (title, description, keywords)
+  - Open Graph tags for social sharing
+  - Schema markup (WebApplication)
+  - Canonical URL, robots meta
+  - Performance audit (Core Web Vitals)
+
+- [x] **V4-8:** Code Review & Security Review
+  - ✅ XSS prevention — escapeHtml() used
+  - ✅ No security vulnerabilities found
+  - ✅ Fixed critical bug: saveToHistory() → historySave()
+  - ✅ Removed console.error in production
+  - ✅ Updated Privacy Policy (localStorage mention)
+  - ✅ Accessibility compliance verified
+  - PR: #22
+
+~~**V4-4:** Header Branding — SKIPPED by user~~
+~~**V4-6:** Dark mode — SKIPPED by user~~
+
+---
+
+## V5+ (Future — not started)
 
 - [ ] Image upload & preview in LinkedIn card
-- [ ] Emoji picker (insert at cursor position)
-- [ ] Dark mode / theme toggle
 - [ ] Privacy-respecting analytics
-- [ ] Multi-language UI (RU/EN toggle)
 - [ ] Supabase backend — draft saving, owner mode

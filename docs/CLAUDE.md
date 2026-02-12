@@ -4,8 +4,41 @@
 
 **ThreadThis** (threadthis.day) — SPA для форматирования постов в соцсети с Unicode-стилизацией и автоматическим разбиением на треды.
 
-**Текущая версия:** V3 (Visual & Branding upgrade)
+**Текущая версия:** V4 (UX & Internationalization)
 **Стек:** HTML5, CSS3, Vanilla JS — без фреймворков, без бэкенда, 100% клиент-сайд.
+
+---
+
+## Session Summary (Feb 12, 2026)
+
+### V4 Tasks Completed
+
+| Task | Description | PR |
+|------|-------------|-----|
+| V4-1 | Bilingual UI (EN/RU toggle with auto-detection) | #18 |
+| V4-2 | Smart thread splitting (natural break points) | #19 |
+| V4-3 | LinkedIn Repost icon (two-arrow loop) | #20 |
+| V4-5 | Emoji picker (60 emojis, 5-column grid) | #21 |
+| V4-8 | Code Review & Security Audit | #22 |
+
+### V4 Skipped (by user request)
+- V4-4: Header Branding
+- V4-6: Dark Mode
+
+### Remaining V4 Task
+- **V4-7: SEO optimization** — meta tags, Open Graph, schema markup
+
+### Key Fixes This Session
+1. **Critical Bug Fixed**: `saveToHistory()` → `historySave(editor.value)` in emoji picker
+2. **Privacy Policy Updated**: Now mentions localStorage for language preference
+3. **Threads Preview**: Reduced width to 85% for better UX
+4. **Emoji Picker**: Fixed z-index issues, opens down with scroll
+
+### Code Quality Verified
+- ✅ No XSS vulnerabilities
+- ✅ No console.log in production
+- ✅ WCAG 2.1 AA accessibility
+- ✅ Focus trap in modals
 
 ## Project Structure
 
@@ -42,8 +75,15 @@ Unicode Bold/Italic, thread splitting (500 chars), copy to clipboard, side-by-si
 ### V2 ✅
 Threads icon, avatars (20 with gender matching), CTA header, manual split `///`, strikethrough/underline, lists, undo/redo, LinkedIn engagement UI, how-to cards.
 
-### V3 (Current Scope)
-See `docs/V3_PRD.md` for full requirements. Summary below.
+### V3 ✅
+Visual identity: dynamic theming, floating icons, legal modals, favicon, accessibility.
+
+### V4 (Current) — IN PROGRESS
+- Bilingual UI (EN/RU)
+- Smart thread splitting
+- Emoji picker
+- Code review & security audit
+- SEO optimization (pending)
 
 ---
 
