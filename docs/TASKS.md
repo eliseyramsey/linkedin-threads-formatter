@@ -32,7 +32,7 @@
 
 ---
 
-## V3 (Visual Identity & Legal) — CURRENT
+## V3 (Visual Identity & Legal) ✅ DONE
 
 ### Milestone 1: Core Structure (P0)
 
@@ -121,7 +121,7 @@
 
 ---
 
-## V4 (UX & Internationalization) — CURRENT
+## V4 (UX & Internationalization) ✅ DONE
 
 - [x] **V4-1:** Bilingual UI (EN/RU toggle)
   - Floating toggle button top-right corner
