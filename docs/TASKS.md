@@ -170,4 +170,3 @@
 
 - [ ] Image upload & preview in LinkedIn card
 - [ ] Privacy-respecting analytics
-- [ ] Supabase backend — draft saving, owner mode
