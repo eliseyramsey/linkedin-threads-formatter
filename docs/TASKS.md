@@ -32,7 +32,7 @@
 
 ---
 
-## V3 (Visual Identity & Legal) — CURRENT
+## V3 (Visual Identity & Legal) ✅ DONE
 
 ### Milestone 1: Core Structure (P0)
 
@@ -121,7 +121,7 @@
 
 ---
 
-## V4 (UX & Internationalization) — CURRENT
+## V4 (UX & Internationalization) ✅ DONE
 
 - [x] **V4-1:** Bilingual UI (EN/RU toggle)
   - Floating toggle button top-right corner
@@ -144,12 +144,13 @@
   - Popular emojis grid (24 emojis, 6-column)
   - PR: #21
 
-- [ ] **V4-7:** SEO optimization
-  - Meta tags (title, description, keywords)
-  - Open Graph tags for social sharing
-  - Schema markup (WebApplication)
-  - Canonical URL, robots meta
-  - Performance audit (Core Web Vitals)
+- [x] **V4-7:** SEO optimization
+  - ✅ Meta tags (title, description, keywords, author)
+  - ✅ Open Graph tags (og:title, og:description, og:image, og:url)
+  - ✅ Twitter Card tags
+  - ✅ Schema.org JSON-LD (WebApplication)
+  - ✅ Canonical URL, robots meta
+  - ⚠️ TODO: Create og-image.png (1200x630px) in images/
 
 - [x] **V4-8:** Code Review & Security Review
   - ✅ XSS prevention — escapeHtml() used
@@ -169,4 +170,3 @@
 
 - [ ] Image upload & preview in LinkedIn card
 - [ ] Privacy-respecting analytics
-- [ ] Supabase backend — draft saving, owner mode

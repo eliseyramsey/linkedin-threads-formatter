@@ -200,7 +200,6 @@ Visual identity and legal compliance.
 - Dark mode
 - Analytics (privacy-respecting)
 - Multi-language UI
-- Supabase backend (drafts, owner mode)
 
 ---
 

@@ -73,8 +73,6 @@ npx serve
 - [x] Thread splitting
 - [x] LinkedIn/Threads preview
 - [x] Copy to clipboard
-- ~~[ ] Supabase интеграция~~ (отключено)
-- ~~[ ] Управление черновиками~~ (отключено)
 
 ### V2 (Planned)
 - [ ] Ручное разбиение тредов `///`
